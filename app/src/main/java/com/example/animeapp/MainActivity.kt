@@ -13,9 +13,12 @@ import androidx.compose.ui.tooling.preview.Preview
 import com.example.animeapp.ui.theme.AnimeAppTheme
 
 class MainActivity : ComponentActivity() {
+    private val mainViewModel = AnimeListViewModel()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
+            mainViewModel.fetchAnimeList()
             AnimeAppTheme {
                 // A surface container using the 'background' color from the theme
                 Surface(
