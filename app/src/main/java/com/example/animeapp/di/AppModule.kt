@@ -17,6 +17,4 @@ object AppModule {
     fun provideAnimeRepository(animeRepositoryImpl: AnimeRepositoryImpl): AnimeRepository {
         return animeRepositoryImpl
     }
-
-
 }

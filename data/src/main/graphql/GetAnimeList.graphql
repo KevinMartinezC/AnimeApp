@@ -10,11 +10,27 @@ query GetAnimeList($page: Int, $perPage: Int) {
       id
       title {
         romaji
+        english
+        native
       }
       coverImage {
         large
       }
+      description
+      episodes
+      averageScore
+      genres
+      characters {
+        nodes {
+          id
+          name {
+            full
+          }
+          image {
+            large
+          }
+        }
+      }
     }
   }
 }
-

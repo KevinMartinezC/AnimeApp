@@ -8,7 +8,7 @@ object ApiService {
     private val okHttpClient = OkHttpClient.Builder().build()
 
     val apolloClient: ApolloClient = ApolloClient.Builder()
-        .serverUrl("https://graphql.anilist.co")
+        .serverUrl(BuildConfig.ANILIST_API__URL)
         .okHttpClient(okHttpClient)
         .build()
 }

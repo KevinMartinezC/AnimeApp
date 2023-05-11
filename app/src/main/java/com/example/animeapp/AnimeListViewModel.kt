@@ -9,8 +9,9 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class AnimeListViewModel @Inject constructor(private val getAnimeListUseCase: GetAnimeListUseCase) :
-    ViewModel() {
+class AnimeListViewModel @Inject constructor(
+    private val getAnimeListUseCase: GetAnimeListUseCase
+) : ViewModel() {
 
     fun loadAnimeList() {
         viewModelScope.launch {
