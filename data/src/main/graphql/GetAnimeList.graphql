@@ -1,4 +1,4 @@
-query GetAnimeList($page: Int, $perPage: Int) {
+query GetAnimeList($page: Int, $perPage: Int, $type: MediaType, $sort: [MediaSort]) {
   Page(page: $page, perPage: $perPage) {
     pageInfo {
       total
@@ -6,7 +6,7 @@ query GetAnimeList($page: Int, $perPage: Int) {
       lastPage
       hasNextPage
     }
-    media(type: ANIME, sort: POPULARITY_DESC) {
+    media(type: $type, sort: $sort) {
       id
       title {
         romaji
