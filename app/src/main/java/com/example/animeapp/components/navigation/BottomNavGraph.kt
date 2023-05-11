@@ -10,7 +10,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import com.example.animeapp.AnimeListViewModel
+import com.example.animeapp.viewmodel.AnimeListViewModel
 import com.example.animeapp.components.favorite.FavoriteScreen
 import com.example.animeapp.components.search.SearchScreen
 

@@ -1,10 +1,10 @@
-package com.example.animeapp
+package com.example.animeapp.viewmodel
 
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.domain.Anime
-import com.example.domain.GetAnimeListUseCase
+import com.example.domain.usecases.GetAnimeListUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -20,7 +20,7 @@ class AnimeListViewModel @Inject constructor(
 
     init {
         viewModelScope.launch {
-            val result = getAnimeListUseCase(1, 20) // Fetch the first 20 items
+            val result = getAnimeListUseCase(1, 50)
             _animeList.value = result
         }
     }

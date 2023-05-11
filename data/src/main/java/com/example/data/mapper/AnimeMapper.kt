@@ -1,5 +1,6 @@
-package com.example.data
+package com.example.data.mapper
 
+import com.example.data.GetAnimeListQuery
 import com.example.domain.Anime
 import com.example.domain.AnimeCharacter
 
