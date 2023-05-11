@@ -34,6 +34,7 @@ fun BottomNavGraph(
     LaunchedEffect(selectedType, selectedSort) {
         viewModel.applyFilter(selectedType, listOf(selectedSort))
     }
+
     NavHost(
         navController = navController,
         startDestination = BottomNavItem.Search.route
@@ -41,12 +42,8 @@ fun BottomNavGraph(
         composable(route = BottomNavItem.Search.route) {
             SearchScreen(
                 uiState = uiState,
-                onTypeChanged = { type ->
-                    selectedType = type
-                },
-                onSortChanged = { sort ->
-                    selectedSort = sort
-                },
+                onTypeChanged = { type -> selectedType = type },
+                onSortChanged = { sort -> selectedSort = sort },
                 modifier = Modifier.padding(contentPadding))
         }
         composable(route = BottomNavItem.Favorite.route) {

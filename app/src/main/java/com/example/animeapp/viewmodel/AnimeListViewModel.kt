@@ -28,10 +28,10 @@ class AnimeListViewModel @Inject constructor(
     val uiState = _uiState.asStateFlow()
 
     init {
-            fetchAnimeList(AnimeType.MANGA, listOf(AnimeSort.POPULARITY_DESC))
+        fetchAnimeList(AnimeType.ANIME, listOf(AnimeSort.POPULARITY_DESC))
     }
 
-    fun fetchAnimeList(type: AnimeType, sort: List<AnimeSort>) {
+    private fun fetchAnimeList(type: AnimeType, sort: List<AnimeSort>) {
         viewModelScope.launch {
             val result = getAnimeListUseCase(1, 50, type, sort)
             if (result.isNotEmpty()) {
@@ -43,6 +43,4 @@ class AnimeListViewModel @Inject constructor(
     fun applyFilter(type: AnimeType, sort: List<AnimeSort>) {
         fetchAnimeList(type, sort)
     }
-
-
 }

@@ -5,7 +5,7 @@
     <dimen name="height_8dp">8dp</dimen>
     <dimen name="height_200dp">200dp</dimen>
     <dimen name="height_180dp">180dp</dimen>
-    <dimen name="height_270dp">270dp</dimen>
+
     <dimen name="wight_8dp">8dp</dimen>
     <dimen name="wight_100dp">100dp</dimen>
     <dimen name="wight_150dp">150dp</dimen>
