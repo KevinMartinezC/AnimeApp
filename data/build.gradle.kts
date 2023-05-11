@@ -2,6 +2,8 @@ plugins {
     id("com.android.library")
     id("org.jetbrains.kotlin.android")
     id("com.apollographql.apollo3").version("3.8.1")
+    kotlin("kapt")
+    id("com.google.dagger.hilt.android")
 
 }
 
@@ -44,7 +46,17 @@ dependencies {
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
     implementation("com.apollographql.apollo3:apollo-runtime:3.8.1")
+    implementation("com.squareup.okhttp3:okhttp:4.9.3")
 
+    implementation("com.google.dagger:hilt-android:2.44")
+    kapt("com.google.dagger:hilt-android-compiler:2.44")
+    implementation("androidx.hilt:hilt-navigation-compose:1.0.0")
+
+
+}
+
+kapt {
+    correctErrorTypes = true
 }
 
 apollo {

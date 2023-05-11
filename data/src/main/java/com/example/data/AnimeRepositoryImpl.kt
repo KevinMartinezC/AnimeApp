@@ -5,8 +5,9 @@ import com.example.data.ApiService.apolloClient
 import com.example.data.extentions.toOptional
 import com.example.domain.Anime
 import com.example.domain.AnimeRepository
+import javax.inject.Inject
 
-class AnimeRepositoryImpl() : AnimeRepository {
+class AnimeRepositoryImpl @Inject constructor() : AnimeRepository {
     override suspend fun getAnimeList(page: Int, perPage: Int): List<Anime> {
         val query = GetAnimeListQuery(page.toOptional(), perPage.toOptional())
 

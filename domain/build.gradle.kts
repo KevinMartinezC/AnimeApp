@@ -8,3 +8,7 @@ java {
     targetCompatibility = JavaVersion.VERSION_17
 }
 
+dependencies{
+    implementation("javax.inject:javax.inject:1")
+}
+

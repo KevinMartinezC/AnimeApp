@@ -3,16 +3,18 @@ package com.example.animeapp
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.data.AnimeRepositoryImpl
-import com.example.domain.AnimeRepository
+import com.example.domain.GetAnimeListUseCase
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class AnimeListViewModel() : ViewModel() {
-    private val animeRepository: AnimeRepository = AnimeRepositoryImpl()
+@HiltViewModel
+class AnimeListViewModel @Inject constructor(private val getAnimeListUseCase: GetAnimeListUseCase) :
+    ViewModel() {
 
-    fun fetchAnimeList() {
+    fun loadAnimeList() {
         viewModelScope.launch {
-            val animeList = animeRepository.getAnimeList(1, 10)
+            val animeList = getAnimeListUseCase(1,10)
             animeList.forEach {
                 Log.d("MainViewModel", it.toString())
             }
@@ -20,3 +22,4 @@ class AnimeListViewModel() : ViewModel() {
     }
 
 }
+
