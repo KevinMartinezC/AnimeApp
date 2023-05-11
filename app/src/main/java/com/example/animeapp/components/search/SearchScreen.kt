@@ -18,10 +18,15 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import coil.compose.rememberAsyncImagePainter
+import com.example.animeapp.SearchUiState
 import com.example.domain.Anime
 
 @Composable
-fun SearchScreen(animeList: List<Anime>, modifier: Modifier = Modifier) {
+fun SearchScreen(
+    uiState: SearchUiState,
+    modifier: Modifier = Modifier
+) {
+    val animeList = uiState.animeList
     Box(modifier = modifier) {
         LazyVerticalGrid(
             columns = GridCells.Fixed(3),

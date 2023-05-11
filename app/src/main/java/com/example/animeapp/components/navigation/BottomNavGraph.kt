@@ -20,14 +20,14 @@ fun BottomNavGraph(
     contentPadding: PaddingValues
 ) {
     val viewModel: AnimeListViewModel = viewModel()
-    val animeList by viewModel.animeList.collectAsState(initial = emptyList())
+    val uiState by viewModel.uiState.collectAsState()
 
     NavHost(
         navController = navController,
         startDestination = BottomNavItem.Search.route
     ) {
         composable(route = BottomNavItem.Search.route) {
-            SearchScreen(animeList = animeList, modifier = Modifier.padding(contentPadding))
+            SearchScreen(uiState = uiState, modifier = Modifier.padding(contentPadding))
         }
         composable(route = BottomNavItem.Favorite.route) {
             FavoriteScreen(modifier = Modifier.padding(contentPadding))
