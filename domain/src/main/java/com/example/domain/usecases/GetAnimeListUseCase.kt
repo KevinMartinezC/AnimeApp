@@ -11,7 +11,7 @@ class GetAnimeListUseCase @Inject constructor(private val animeRepository: Anime
         page: Int,
         perPage: Int,
         type: AnimeType,
-        sort: List<AnimeSort>
+        sort: List<AnimeSort>,
     ): List<Anime> {
         return animeRepository.getAnimeList(page, perPage,type, sort )
     }

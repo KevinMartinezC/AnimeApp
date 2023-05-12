@@ -17,7 +17,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.dimensionResource
 import com.example.animeapp.R
 import com.example.animeapp.SearchUiState
-import com.example.animeapp.components.FilterOptions
+import com.example.animeapp.components.search.filter.FilterOptions
 import com.example.domain.AnimeSort
 import com.example.domain.AnimeType
 
@@ -33,11 +33,13 @@ fun SearchScreen(
     var selectedSort by rememberSaveable { mutableStateOf(AnimeSort.POPULARITY_DESC) }
     val onTypeChangedState by rememberUpdatedState(onTypeChanged)
     val onSortChangedState by rememberUpdatedState(onSortChanged)
+    var searchQuery by rememberSaveable { mutableStateOf("") }
 
     Column(
         modifier = Modifier.fillMaxSize(),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
+
         FilterOptions(
             type = selectedType,
             sort = selectedSort,

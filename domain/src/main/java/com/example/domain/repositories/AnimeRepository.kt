@@ -5,5 +5,10 @@ import com.example.domain.AnimeSort
 import com.example.domain.AnimeType
 
 interface AnimeRepository {
-    suspend fun getAnimeList(page: Int, perPage: Int, type: AnimeType, sort: List<AnimeSort>): List<Anime>
+    suspend fun getAnimeList(
+        page: Int,
+        perPage: Int,
+        type: AnimeType,
+        sort: List<AnimeSort>,
+    ): List<Anime>
 }

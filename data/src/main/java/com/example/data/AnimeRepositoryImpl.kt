@@ -19,7 +19,7 @@ class AnimeRepositoryImpl @Inject constructor(
         page: Int,
         perPage: Int,
         type: AnimeType,
-        sort: List<AnimeSort>
+        sort: List<AnimeSort>,
     ): List<Anime> {
         val query = GetAnimeListQuery(
             page.toOptional(),
