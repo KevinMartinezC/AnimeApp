@@ -2,10 +2,8 @@ package com.example.animeapp.components.search
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.text.KeyboardActions
@@ -22,22 +20,21 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.text.input.ImeAction
-import androidx.compose.ui.unit.dp
+import androidx.paging.compose.LazyPagingItems
 import com.example.animeapp.R
-import com.example.animeapp.SearchUiState
 import com.example.animeapp.components.search.filter.FilterOptions
+import com.example.domain.Anime
 import com.example.domain.AnimeSort
 import com.example.domain.AnimeType
 
 @Composable
 fun SearchScreen(
-    uiState: SearchUiState,
+    animes: LazyPagingItems<Anime>,
     onTypeChanged: (AnimeType) -> Unit,
     onSortChanged: (AnimeSort) -> Unit,
     onSearchChanged: (String) -> Unit,
     modifier: Modifier = Modifier
 ) {
-    val animeList = uiState.animeList
     var selectedType by rememberSaveable { mutableStateOf(AnimeType.ANIME) }
     var selectedSort by rememberSaveable { mutableStateOf(AnimeSort.POPULARITY_DESC) }
     val onTypeChangedState by rememberUpdatedState(onTypeChanged)
@@ -76,12 +73,14 @@ fun SearchScreen(
             contentPadding = PaddingValues(dimensionResource(id = R.dimen.padding_8dp)),
             modifier = modifier
         ) {
-            items(animeList.size) { index ->
+            items(animes.itemCount) { index ->
+                val animeItem = animes[index] ?: return@items
                 AnimeCard(
-                    anime = animeList[index],
+                    anime = animeItem,
                     modifier = Modifier.padding(dimensionResource(id = R.dimen.padding_4dp))
                 )
             }
         }
+
     }
 }

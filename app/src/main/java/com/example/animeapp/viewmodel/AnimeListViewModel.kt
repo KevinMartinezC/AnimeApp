@@ -3,16 +3,23 @@ package com.example.animeapp.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import androidx.paging.Pager
+import androidx.paging.PagingConfig
+import androidx.paging.PagingData
+import androidx.paging.cachedIn
+import com.example.animeapp.AnimePagingSource
 import com.example.animeapp.SearchUiState
 import com.example.domain.Anime
 import com.example.domain.AnimeSort
 import com.example.domain.AnimeType
 import com.example.domain.usecases.GetAnimeListUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.update
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.flatMapLatest
 import javax.inject.Inject
 
 @HiltViewModel
@@ -22,43 +29,51 @@ class AnimeListViewModel @Inject constructor(
 
     private val _uiState = MutableStateFlow(
         SearchUiState(
-            animeList = emptyList()
+            animeList = emptyList(),
+            type = AnimeType.ANIME,
+            sort = emptyList(),
+            search = null
         )
     )
 
     val uiState = _uiState.asStateFlow()
 
-    private suspend fun fetchAnimeList(
+    private val _type = MutableStateFlow(AnimeType.ANIME)
+    private val _sort = MutableStateFlow<List<AnimeSort>>(emptyList())
+    private val _search = MutableStateFlow<String?>(null)
+
+    private fun createPager(
         type: AnimeType,
         sort: List<AnimeSort>,
-        search: String? = null
-    ): List<Anime> {
-        return getAnimeListUseCase(1, 50, type, sort, search)
+        search: String?
+    ): Pager<Int, Anime> {
+        return Pager(
+            config = PagingConfig(
+                pageSize = 10,
+                enablePlaceholders = false
+            ),
+            pagingSourceFactory = { AnimePagingSource(getAnimeListUseCase, type, sort, search) }
+        )
     }
 
-    private fun updateAnimeList(
-        animeList: List<Anime>,
-        type: AnimeType,
-        sort: List<AnimeSort>
-    ) {
-        _uiState.update { it.copy(animeList = animeList, type = type, sort = sort) }
-    }
+    @OptIn(ExperimentalCoroutinesApi::class)
+    val animeFlow: Flow<PagingData<Anime>> = combine(_type, _sort, _search) { type, sort, search ->
+        Triple(type, sort, search)
+    }.flatMapLatest { (type, sort, search) ->
+        createPager(type, sort, search).flow
+    }.cachedIn(viewModelScope)
 
     fun applyFilter(
         type: AnimeType,
         sort: List<AnimeSort>,
         search: String? = null
     ) {
-        viewModelScope.launch {
-            val animeList = fetchAnimeList(type, sort, search)
-            updateAnimeList(animeList, type, sort)
-        }
+        _type.value = type
+        _sort.value = sort
+        _search.value = search
     }
 
     fun applySearch(search: String? = null) {
-        viewModelScope.launch {
-            val animeList = fetchAnimeList(uiState.value.type, uiState.value.sort, search)
-            updateAnimeList(animeList, uiState.value.type, uiState.value.sort)
-        }
+        _search.value = search
     }
 }

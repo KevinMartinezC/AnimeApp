@@ -17,7 +17,8 @@ androidxTestExtJUnit = "1.1.5"
 espressoCore = "3.5.1"
 material3 = "1.1.0-rc01"
 coilComposeVersion = "2.3.0"
-
+pagingCompose = "1.0.0-alpha19"
+pagingRuntime = "3.1.1"
 
 [libraries]
 apollo-runtime = { module = "com.apollographql.apollo3:apollo-runtime", version.ref = "apolloRuntime" }
@@ -43,6 +44,12 @@ uiTestJUnit4 = { module = "androidx.compose.ui:ui-test-junit4", version.ref = "c
 uiTooling = { module = "androidx.compose.ui:ui-tooling", version.ref = "compose" }
 uiTestManifest = { module = "androidx.compose.ui:ui-test-manifest", version.ref = "compose" }
 coilCompose = { module = "io.coil-kt:coil-compose", version.ref = "coilComposeVersion" }
+paging-common = { module = "androidx.paging:paging-common", version.ref = "pagingRuntime" }
+paging-compose = { module = "androidx.paging:paging-compose", version.ref = "pagingCompose" }
+paging-guava = { module = "androidx.paging:paging-guava", version.ref = "pagingRuntime" }
+paging-runtime = { module = "androidx.paging:paging-runtime", version.ref = "pagingRuntime" }
+paging-rxjava2 = { module = "androidx.paging:paging-rxjava2", version.ref = "pagingRuntime" }
+paging-rxjava3 = { module = "androidx.paging:paging-rxjava3", version.ref = "pagingRuntime" }
 
 [plugins]
 
@@ -55,4 +62,12 @@ ui-compose = [
 hilt = [
     "hilt-android",
     "hilt-navigation-compose"
+]
+paging = [
+    "paging-common",
+    "paging-compose",
+    "paging-guava",
+    "paging-runtime",
+    "paging-rxjava2",
+    "paging-rxjava3"
 ]

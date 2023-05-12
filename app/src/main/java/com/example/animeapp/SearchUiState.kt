@@ -5,7 +5,10 @@ import com.example.domain.AnimeSort
 import com.example.domain.AnimeType
 
 data class SearchUiState(
+
     val animeList: List<Anime> = emptyList(),
-    val type: AnimeType = AnimeType.ANIME,
-    val sort: List<AnimeSort> = listOf(AnimeSort.POPULARITY_DESC)
+    val type: AnimeType,
+    val sort: List<AnimeSort>,
+    val search: String? = null
+
 )

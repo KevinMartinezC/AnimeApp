@@ -22,7 +22,9 @@ import com.example.domain.Anime
 
 private const val MAX_LINE_TEXT = 3
 @Composable
-fun AnimeCard(anime: Anime, modifier: Modifier = Modifier) {
+fun AnimeCard(
+    anime: Anime,
+    modifier: Modifier = Modifier) {
     Card(
         shape = RoundedCornerShape(dimensionResource(id = R.dimen.rounder_corner_4)),
         elevation = CardDefaults.cardElevation(15.dp),

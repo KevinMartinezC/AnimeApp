@@ -29,14 +29,18 @@ class AnimeRepositoryImpl @Inject constructor(
             sort.map { it.toGraphQLMediaSort() }.toOptional(),
             search.toOptional()
         )
+        return try {
+            val response = apolloClient.query(query).execute()
+            if (response.hasErrors()) {
+                return emptyList()
+            }
 
-        val response = apolloClient.query(query).execute()
-        if (response.hasErrors()) {
-            return emptyList()
+            val mediumList = response.data?.Page?.media ?: emptyList<GetAnimeListQuery.Medium>()
+            mediumList.mapNotNull { it?.toAnime() }
+        } catch (e: Exception) {
+            emptyList()
         }
 
-        val mediumList = response.data?.Page?.media ?: emptyList<GetAnimeListQuery.Medium>()
-        return mediumList.mapNotNull { it?.toAnime() }
     }
 }
 

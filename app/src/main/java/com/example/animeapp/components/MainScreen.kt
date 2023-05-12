@@ -1,4 +1,4 @@
-package com.example.news.components
+package com.example.animeapp.components
 
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable

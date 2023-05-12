@@ -4,7 +4,6 @@ import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -15,6 +14,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import androidx.paging.compose.collectAsLazyPagingItems
 import com.example.animeapp.viewmodel.AnimeListViewModel
 import com.example.animeapp.components.favorite.FavoriteScreen
 import com.example.animeapp.components.search.SearchScreen
@@ -27,12 +27,11 @@ fun BottomNavGraph(
     contentPadding: PaddingValues
 ) {
     val viewModel: AnimeListViewModel = viewModel()
-    val uiState by viewModel.uiState.collectAsState()
 
     var selectedType by rememberSaveable{ mutableStateOf(AnimeType.ANIME) }
     var selectedSort by rememberSaveable { mutableStateOf(AnimeSort.POPULARITY_DESC) }
     val searchQueryState = remember { mutableStateOf("") }
-
+    val anime = viewModel.animeFlow.collectAsLazyPagingItems()
     LaunchedEffect(selectedType, selectedSort) {
         viewModel.applyFilter(selectedType, listOf(selectedSort))
 
@@ -48,7 +47,7 @@ fun BottomNavGraph(
     ) {
         composable(route = BottomNavItem.Search.route) {
             SearchScreen(
-                uiState = uiState,
+                animes = anime,
                 onTypeChanged = { type -> selectedType = type },
                 onSortChanged = { sort -> selectedSort = sort },
                 onSearchChanged = { query -> searchQueryState.value = query },
