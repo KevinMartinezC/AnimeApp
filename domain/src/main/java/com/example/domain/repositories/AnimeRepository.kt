@@ -10,5 +10,7 @@ interface AnimeRepository {
         perPage: Int,
         type: AnimeType,
         sort: List<AnimeSort>,
+        search: String? = null
+
     ): List<Anime>
 }

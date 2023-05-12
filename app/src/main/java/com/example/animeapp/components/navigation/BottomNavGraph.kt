@@ -7,6 +7,7 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
@@ -30,9 +31,11 @@ fun BottomNavGraph(
 
     var selectedType by rememberSaveable{ mutableStateOf(AnimeType.ANIME) }
     var selectedSort by rememberSaveable { mutableStateOf(AnimeSort.POPULARITY_DESC) }
+    val searchQueryState = remember { mutableStateOf("") }
 
-    LaunchedEffect(selectedType, selectedSort) {
+    LaunchedEffect(selectedType, selectedSort, searchQueryState.value) {
         viewModel.applyFilter(selectedType, listOf(selectedSort))
+        viewModel.performSearch(searchQueryState.value)
     }
 
     NavHost(
@@ -44,7 +47,9 @@ fun BottomNavGraph(
                 uiState = uiState,
                 onTypeChanged = { type -> selectedType = type },
                 onSortChanged = { sort -> selectedSort = sort },
+                onSearchChanged = { query -> searchQueryState.value = query },
                 modifier = Modifier.padding(contentPadding))
+
         }
         composable(route = BottomNavItem.Favorite.route) {
             FavoriteScreen(modifier = Modifier.padding(contentPadding))

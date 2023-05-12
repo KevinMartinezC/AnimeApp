@@ -1,6 +1,5 @@
 package com.example.data
 
-import android.util.Log
 import com.apollographql.apollo3.ApolloClient
 import com.example.data.extentions.toOptional
 import com.example.data.mapper.toAnime
@@ -20,17 +19,19 @@ class AnimeRepositoryImpl @Inject constructor(
         perPage: Int,
         type: AnimeType,
         sort: List<AnimeSort>,
+        search: String?
+
     ): List<Anime> {
         val query = GetAnimeListQuery(
             page.toOptional(),
             perPage.toOptional(),
             type.toGraphQLMediaType().toOptional(),
-            sort.map { it.toGraphQLMediaSort() }.toOptional()
+            sort.map { it.toGraphQLMediaSort() }.toOptional(),
+            search.toOptional()
         )
 
         val response = apolloClient.query(query).execute()
         if (response.hasErrors()) {
-            Log.e("AnimeRepositoryImpl", "Error fetching anime list: ${response.errors}")
             return emptyList()
         }
 

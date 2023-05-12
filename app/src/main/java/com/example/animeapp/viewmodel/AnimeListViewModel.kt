@@ -30,17 +30,20 @@ class AnimeListViewModel @Inject constructor(
     init {
         fetchAnimeList(AnimeType.ANIME, listOf(AnimeSort.POPULARITY_DESC))
     }
+    fun performSearch(query: String) {
+        fetchAnimeList(AnimeType.ANIME, listOf(AnimeSort.POPULARITY_DESC), query)
+    }
 
-    private fun fetchAnimeList(type: AnimeType, sort: List<AnimeSort>) {
+    private fun fetchAnimeList(type: AnimeType, sort: List<AnimeSort>, search: String? = null) {
         viewModelScope.launch {
-            val result = getAnimeListUseCase(1, 50, type, sort)
+            val result = getAnimeListUseCase(1, 50, type, sort, search)
             if (result.isNotEmpty()) {
                 _uiState.update { it.copy(animeList = result) }
             }
         }
     }
 
-    fun applyFilter(type: AnimeType, sort: List<AnimeSort>) {
-        fetchAnimeList(type, sort)
+    fun applyFilter(type: AnimeType, sort: List<AnimeSort>, search: String? = null) {
+        fetchAnimeList(type, sort, search)
     }
 }
