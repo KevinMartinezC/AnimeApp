@@ -4,6 +4,7 @@ package com.example.animeapp.viewmodel
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.animeapp.SearchUiState
+import com.example.domain.Anime
 import com.example.domain.AnimeSort
 import com.example.domain.AnimeType
 import com.example.domain.usecases.GetAnimeListUseCase
@@ -27,23 +28,37 @@ class AnimeListViewModel @Inject constructor(
 
     val uiState = _uiState.asStateFlow()
 
-    init {
-        fetchAnimeList(AnimeType.ANIME, listOf(AnimeSort.POPULARITY_DESC))
-    }
-    fun performSearch(query: String) {
-        fetchAnimeList(AnimeType.ANIME, listOf(AnimeSort.POPULARITY_DESC), query)
+    private suspend fun fetchAnimeList(
+        type: AnimeType,
+        sort: List<AnimeSort>,
+        search: String? = null
+    ): List<Anime> {
+        return getAnimeListUseCase(1, 50, type, sort, search)
     }
 
-    private fun fetchAnimeList(type: AnimeType, sort: List<AnimeSort>, search: String? = null) {
+    private fun updateAnimeList(
+        animeList: List<Anime>,
+        type: AnimeType,
+        sort: List<AnimeSort>
+    ) {
+        _uiState.update { it.copy(animeList = animeList, type = type, sort = sort) }
+    }
+
+    fun applyFilter(
+        type: AnimeType,
+        sort: List<AnimeSort>,
+        search: String? = null
+    ) {
         viewModelScope.launch {
-            val result = getAnimeListUseCase(1, 50, type, sort, search)
-            if (result.isNotEmpty()) {
-                _uiState.update { it.copy(animeList = result) }
-            }
+            val animeList = fetchAnimeList(type, sort, search)
+            updateAnimeList(animeList, type, sort)
         }
     }
 
-    fun applyFilter(type: AnimeType, sort: List<AnimeSort>, search: String? = null) {
-        fetchAnimeList(type, sort, search)
+    fun applySearch(search: String? = null) {
+        viewModelScope.launch {
+            val animeList = fetchAnimeList(uiState.value.type, uiState.value.sort, search)
+            updateAnimeList(animeList, uiState.value.type, uiState.value.sort)
+        }
     }
 }

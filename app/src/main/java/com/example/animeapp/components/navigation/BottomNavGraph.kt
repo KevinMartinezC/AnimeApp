@@ -33,9 +33,13 @@ fun BottomNavGraph(
     var selectedSort by rememberSaveable { mutableStateOf(AnimeSort.POPULARITY_DESC) }
     val searchQueryState = remember { mutableStateOf("") }
 
-    LaunchedEffect(selectedType, selectedSort, searchQueryState.value) {
+    LaunchedEffect(selectedType, selectedSort) {
         viewModel.applyFilter(selectedType, listOf(selectedSort))
-        viewModel.performSearch(searchQueryState.value)
+
+    }
+
+    LaunchedEffect(searchQueryState.value) {
+        viewModel.applySearch(searchQueryState.value)
     }
 
     NavHost(
@@ -49,7 +53,6 @@ fun BottomNavGraph(
                 onSortChanged = { sort -> selectedSort = sort },
                 onSearchChanged = { query -> searchQueryState.value = query },
                 modifier = Modifier.padding(contentPadding))
-
         }
         composable(route = BottomNavItem.Favorite.route) {
             FavoriteScreen(modifier = Modifier.padding(contentPadding))
