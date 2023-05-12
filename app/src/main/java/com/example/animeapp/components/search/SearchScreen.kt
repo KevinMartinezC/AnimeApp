@@ -3,11 +3,14 @@ package com.example.animeapp.components.search
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
@@ -20,6 +23,8 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.text.input.ImeAction
+import androidx.navigation.NavHostController
+import androidx.paging.LoadState
 import androidx.paging.compose.LazyPagingItems
 import com.example.animeapp.R
 import com.example.animeapp.components.search.filter.FilterOptions
@@ -33,6 +38,7 @@ fun SearchScreen(
     onTypeChanged: (AnimeType) -> Unit,
     onSortChanged: (AnimeSort) -> Unit,
     onSearchChanged: (String) -> Unit,
+    navController: NavHostController,
     modifier: Modifier = Modifier
 ) {
     var selectedType by rememberSaveable { mutableStateOf(AnimeType.ANIME) }
@@ -77,8 +83,21 @@ fun SearchScreen(
                 val animeItem = animes[index] ?: return@items
                 AnimeCard(
                     anime = animeItem,
+                    navController = navController,
                     modifier = Modifier.padding(dimensionResource(id = R.dimen.padding_4dp))
                 )
+            }
+            animes.apply {
+                if (loadState.append is LoadState.Loading) {
+                    item {
+                        CircularProgressIndicator(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .wrapContentSize(Alignment.Center)
+                                .padding()
+                        )
+                    }
+                }
             }
         }
 

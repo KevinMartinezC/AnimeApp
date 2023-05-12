@@ -16,21 +16,6 @@ query GetAnimeList($page: Int, $perPage: Int, $type: MediaType, $sort: [MediaSor
       coverImage {
         large
       }
-      description
-      episodes
-      averageScore
-      genres
-      characters {
-        nodes {
-          id
-          name {
-            full
-          }
-          image {
-            large
-          }
-        }
-      }
     }
   }
 }

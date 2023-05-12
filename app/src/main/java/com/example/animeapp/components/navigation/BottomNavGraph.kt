@@ -12,9 +12,12 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
+import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import androidx.navigation.navArgument
 import androidx.paging.compose.collectAsLazyPagingItems
+import com.example.animeapp.components.DetailScreen
 import com.example.animeapp.viewmodel.AnimeListViewModel
 import com.example.animeapp.components.favorite.FavoriteScreen
 import com.example.animeapp.components.search.SearchScreen
@@ -51,10 +54,22 @@ fun BottomNavGraph(
                 onTypeChanged = { type -> selectedType = type },
                 onSortChanged = { sort -> selectedSort = sort },
                 onSearchChanged = { query -> searchQueryState.value = query },
+                navController = navController,
                 modifier = Modifier.padding(contentPadding))
         }
         composable(route = BottomNavItem.Favorite.route) {
             FavoriteScreen(modifier = Modifier.padding(contentPadding))
+        }
+        composable(
+            route = "detail/{id}",
+            arguments = listOf(navArgument("id"){ type = NavType.IntType})
+        )
+        { navBackStackEntry ->
+            val id = navBackStackEntry.arguments?.getInt("id")
+            if (id != null) {
+                DetailScreen(id=id)
+            }
+
         }
     }
 }

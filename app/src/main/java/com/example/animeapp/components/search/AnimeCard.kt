@@ -1,6 +1,7 @@
 package com.example.animeapp.components.search
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -16,6 +17,7 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavHostController
 import coil.compose.rememberAsyncImagePainter
 import com.example.animeapp.R
 import com.example.domain.Anime
@@ -24,8 +26,10 @@ private const val MAX_LINE_TEXT = 3
 @Composable
 fun AnimeCard(
     anime: Anime,
+    navController: NavHostController,
     modifier: Modifier = Modifier) {
     Card(
+
         shape = RoundedCornerShape(dimensionResource(id = R.dimen.rounder_corner_4)),
         elevation = CardDefaults.cardElevation(15.dp),
         modifier = modifier
@@ -34,6 +38,10 @@ fun AnimeCard(
                 height = dimensionResource(id = R.dimen.height_200dp)
             )
             .padding(dimensionResource(id = R.dimen.padding_4dp))
+            .clickable{
+                navController.navigate(("detail/${anime.id}"))
+            }
+
     ) {
         Column(modifier = Modifier.fillMaxSize()) {
             val painter = rememberAsyncImagePainter(model = anime.imageUrl)

@@ -3,9 +3,11 @@ package com.example.data
 import com.apollographql.apollo3.ApolloClient
 import com.example.data.extentions.toOptional
 import com.example.data.mapper.toAnime
+import com.example.data.mapper.toAnimeDetails
 import com.example.data.mapper.toGraphQLMediaSort
 import com.example.data.mapper.toGraphQLMediaType
 import com.example.domain.Anime
+import com.example.domain.AnimeDetails
 import com.example.domain.AnimeSort
 import com.example.domain.AnimeType
 import com.example.domain.repositories.AnimeRepository
@@ -41,6 +43,22 @@ class AnimeRepositoryImpl @Inject constructor(
             emptyList()
         }
 
+    }
+
+    override suspend fun getAnimeDetails(id: Int): AnimeDetails {
+        val query = GetAnimeDetailsQuery(id)
+
+        return try {
+            val response = apolloClient.query(query).execute()
+            if (response.hasErrors()) {
+                throw Exception("Error fetching anime details")
+            }
+
+            val media = response.data?.Media
+            media?.toAnimeDetails() ?: throw Exception("Anime not found")
+        } catch (e: Exception) {
+            throw e
+        }
     }
 }
 

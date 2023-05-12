@@ -1,6 +1,7 @@
 package com.example.domain.repositories
 
 import com.example.domain.Anime
+import com.example.domain.AnimeDetails
 import com.example.domain.AnimeSort
 import com.example.domain.AnimeType
 
@@ -11,6 +12,8 @@ interface AnimeRepository {
         type: AnimeType,
         sort: List<AnimeSort>,
         search: String? = null
-
     ): List<Anime>
+    suspend fun getAnimeDetails(id: Int): AnimeDetails
+
+
 }
