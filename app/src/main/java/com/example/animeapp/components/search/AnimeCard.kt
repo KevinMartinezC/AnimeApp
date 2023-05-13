@@ -23,13 +23,14 @@ import com.example.animeapp.R
 import com.example.domain.Anime
 
 private const val MAX_LINE_TEXT = 3
+
 @Composable
 fun AnimeCard(
     anime: Anime,
     navController: NavHostController,
-    modifier: Modifier = Modifier) {
+    modifier: Modifier = Modifier
+) {
     Card(
-
         shape = RoundedCornerShape(dimensionResource(id = R.dimen.rounder_corner_4)),
         elevation = CardDefaults.cardElevation(15.dp),
         modifier = modifier
@@ -38,7 +39,7 @@ fun AnimeCard(
                 height = dimensionResource(id = R.dimen.height_200dp)
             )
             .padding(dimensionResource(id = R.dimen.padding_4dp))
-            .clickable{
+            .clickable {
                 navController.navigate(("detail/${anime.id}"))
             }
 

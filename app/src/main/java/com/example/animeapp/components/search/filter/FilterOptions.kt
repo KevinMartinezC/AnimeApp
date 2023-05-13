@@ -34,17 +34,17 @@ fun FilterOptions(
             selectedItem = type.name,
             onItemSelected = { selected ->
                 onTypeSelected(AnimeType.valueOf(selected))
-            }
-        )
+            })
         DropdownSelector(
             items = sortItems,
             selectedItem = AnimeSortUtils.sortDisplayNames[sort] ?: sort.name,
             onItemSelected = { selected ->
-                mapDisplayNameToAnimeSort(selected, AnimeSortUtils.sortDisplayNames)?.let { selectedSort ->
+                mapDisplayNameToAnimeSort(
+                    selected, AnimeSortUtils.sortDisplayNames
+                )?.let { selectedSort ->
                     onSortSelected(selectedSort)
                 }
             }
         )
     }
 }
-

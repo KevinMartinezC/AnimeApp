@@ -61,4 +61,3 @@ class AnimeRepositoryImpl @Inject constructor(
         }
     }
 }
-
