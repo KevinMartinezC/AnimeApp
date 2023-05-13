@@ -3,4 +3,12 @@
     <string name="navigation_icon">Navigation Icon</string>
     <string name="filter">Filter</string>
     <string name="search">Search</string>
+    <string name="episodes">Episodes :</string>
+    <string name="score">Score :</string>
+    <string name="genders">Genders :</string>
+    <string name="englisname">English Name :</string>
+    <string name="japanese_name">Japanese Name :</string>
+    <string name="image_cover">image cover</string>
+    <string name="character_image">character image</string>
+
 </resources>

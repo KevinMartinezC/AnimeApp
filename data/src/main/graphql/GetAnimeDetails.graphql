@@ -3,6 +3,8 @@ query GetAnimeDetails($id: Int!) {
         id
         title {
             romaji
+            english
+            native
 
         }
         coverImage {

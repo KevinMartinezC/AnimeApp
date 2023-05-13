@@ -17,7 +17,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
 import androidx.paging.compose.collectAsLazyPagingItems
-import com.example.animeapp.components.DetailScreen
+import com.example.animeapp.components.detail.DetailScreen
 import com.example.animeapp.viewmodel.AnimeListViewModel
 import com.example.animeapp.components.favorite.FavoriteScreen
 import com.example.animeapp.components.search.SearchScreen

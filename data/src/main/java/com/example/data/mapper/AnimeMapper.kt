@@ -22,6 +22,8 @@ fun GetAnimeDetailsQuery.Media.toAnimeDetails(): AnimeDetails {
     return AnimeDetails(
         id = id,
         title = title?.romaji.orEmpty(),
+        englishName = title?.english.orEmpty(),
+        japaneseName = title?.native.orEmpty(),
         imageUrl = coverImage?.large.orEmpty(),
         description = description,
         episodes = episodes,

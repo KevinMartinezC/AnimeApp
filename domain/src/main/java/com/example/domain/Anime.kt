@@ -9,6 +9,8 @@ data class Anime(
 data class AnimeDetails(
     val id: Int,
     val title: String,
+    val englishName: String,
+    val japaneseName: String, // native title
     val imageUrl: String,
     val description: String?,
     val episodes: Int?,

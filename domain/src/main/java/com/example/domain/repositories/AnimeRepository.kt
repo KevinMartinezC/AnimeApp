@@ -13,7 +13,6 @@ interface AnimeRepository {
         sort: List<AnimeSort>,
         search: String? = null
     ): List<Anime>
+
     suspend fun getAnimeDetails(id: Int): AnimeDetails
-
-
 }
