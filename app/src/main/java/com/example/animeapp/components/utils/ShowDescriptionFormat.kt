@@ -1,4 +1,4 @@
-package com.example.animeapp.components.detail.utils
+package com.example.animeapp.components.utils
 
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.height

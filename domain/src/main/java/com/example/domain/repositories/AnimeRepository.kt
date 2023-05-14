@@ -1,9 +1,10 @@
 package com.example.domain.repositories
 
-import com.example.domain.Anime
-import com.example.domain.AnimeDetails
-import com.example.domain.AnimeSort
-import com.example.domain.AnimeType
+import com.example.domain.model.Anime
+import com.example.domain.model.AnimeDetails
+import com.example.domain.model.AnimeSort
+import com.example.domain.model.AnimeType
+import com.example.domain.model.CharacterInfo
 
 interface AnimeRepository {
     suspend fun getAnimeList(
@@ -15,4 +16,6 @@ interface AnimeRepository {
     ): List<Anime>
 
     suspend fun getAnimeDetails(id: Int): AnimeDetails
+
+    suspend fun getCharacter(id: Int) : CharacterInfo
 }

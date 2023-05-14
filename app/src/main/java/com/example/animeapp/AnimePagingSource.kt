@@ -2,9 +2,9 @@ package com.example.animeapp
 
 import androidx.paging.PagingSource
 import androidx.paging.PagingState
-import com.example.domain.Anime
-import com.example.domain.AnimeSort
-import com.example.domain.AnimeType
+import com.example.domain.model.Anime
+import com.example.domain.model.AnimeSort
+import com.example.domain.model.AnimeType
 import com.example.domain.usecases.GetAnimeListUseCase
 
 class AnimePagingSource(

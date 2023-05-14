@@ -1,7 +1,7 @@
 package com.example.data.mapper
 
 import com.example.data.type.MediaType
-import com.example.domain.AnimeType
+import com.example.domain.model.AnimeType
 
 fun AnimeType.toGraphQLMediaType(): MediaType {
     return when (this) {

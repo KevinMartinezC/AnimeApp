@@ -1,7 +1,7 @@
 package com.example.data.mapper
 
 import com.example.data.type.MediaSort
-import com.example.domain.AnimeSort
+import com.example.domain.model.AnimeSort
 
 fun AnimeSort.toGraphQLMediaSort(): MediaSort {
     return when (this) {

@@ -9,9 +9,9 @@ import androidx.paging.PagingData
 import androidx.paging.cachedIn
 import com.example.animeapp.AnimePagingSource
 import com.example.animeapp.SearchUiState
-import com.example.domain.Anime
-import com.example.domain.AnimeSort
-import com.example.domain.AnimeType
+import com.example.domain.model.Anime
+import com.example.domain.model.AnimeSort
+import com.example.domain.model.AnimeType
 import com.example.domain.usecases.GetAnimeListUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.ExperimentalCoroutinesApi

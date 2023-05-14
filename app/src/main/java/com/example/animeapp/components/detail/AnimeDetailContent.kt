@@ -23,12 +23,15 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.rememberAsyncImagePainter
 import com.example.animeapp.R
-import com.example.animeapp.components.detail.utils.ShowDescriptionFormat
-import com.example.animeapp.components.detail.utils.formatResourceString
-import com.example.domain.AnimeDetails
+import com.example.animeapp.components.utils.ShowDescriptionFormat
+import com.example.animeapp.components.utils.formatResourceString
+import com.example.domain.model.AnimeDetails
 
 @Composable
-fun AnimeDetailContent(animeDetails: AnimeDetails) {
+fun AnimeDetailContent(
+    animeDetails: AnimeDetails,
+    onCharacterClick: (Int) -> Unit
+) {
     val scrollState = rememberScrollState()
 
     Column(
@@ -103,7 +106,7 @@ fun AnimeDetailContent(animeDetails: AnimeDetails) {
             )
 
         }
-        CharacterCards(characters = animeDetails.characters ?: emptyList())
+        CharacterCards(characters = animeDetails.characters ?: emptyList(), onCharacterClick = onCharacterClick)
 
         Spacer(modifier = Modifier.height(100.dp))
 

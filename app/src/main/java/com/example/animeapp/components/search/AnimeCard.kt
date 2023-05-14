@@ -20,7 +20,7 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import coil.compose.rememberAsyncImagePainter
 import com.example.animeapp.R
-import com.example.domain.Anime
+import com.example.domain.model.Anime
 
 private const val MAX_LINE_TEXT = 3
 

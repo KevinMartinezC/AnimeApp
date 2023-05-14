@@ -1,4 +1,4 @@
-package com.example.domain
+package com.example.domain.model
 
 data class AnimeDetails(
     val id: Int,
@@ -17,5 +17,5 @@ data class AnimeCharacter(
     val id: Int,
     val name: String,
     val imageUrl: String,
-    val description: String?
 )
+

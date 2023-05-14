@@ -11,8 +11,8 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import androidx.paging.compose.collectAsLazyPagingItems
 import com.example.animeapp.viewmodel.AnimeListViewModel
-import com.example.domain.AnimeSort
-import com.example.domain.AnimeType
+import com.example.domain.model.AnimeSort
+import com.example.domain.model.AnimeType
 
 @Composable
 fun SearchScreenContent(

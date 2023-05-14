@@ -28,9 +28,9 @@ import androidx.paging.LoadState
 import androidx.paging.compose.LazyPagingItems
 import com.example.animeapp.R
 import com.example.animeapp.components.search.filter.FilterOptions
-import com.example.domain.Anime
-import com.example.domain.AnimeSort
-import com.example.domain.AnimeType
+import com.example.domain.model.Anime
+import com.example.domain.model.AnimeSort
+import com.example.domain.model.AnimeType
 
 @Composable
 fun SearchScreen(

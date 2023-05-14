@@ -1,6 +1,6 @@
 package com.example.animeapp.components.search.utils
 
-import com.example.domain.AnimeSort
+import com.example.domain.model.AnimeSort
 
 fun mapDisplayNameToAnimeSort(
     displayName: String,

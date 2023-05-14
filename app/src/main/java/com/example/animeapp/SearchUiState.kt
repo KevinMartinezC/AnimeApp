@@ -1,8 +1,8 @@
 package com.example.animeapp
 
-import com.example.domain.Anime
-import com.example.domain.AnimeSort
-import com.example.domain.AnimeType
+import com.example.domain.model.Anime
+import com.example.domain.model.AnimeSort
+import com.example.domain.model.AnimeType
 
 data class SearchUiState(
 

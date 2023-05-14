@@ -1,8 +1,8 @@
 package com.example.domain.usecases
 
-import com.example.domain.Anime
-import com.example.domain.AnimeSort
-import com.example.domain.AnimeType
+import com.example.domain.model.Anime
+import com.example.domain.model.AnimeSort
+import com.example.domain.model.AnimeType
 import com.example.domain.repositories.AnimeRepository
 import javax.inject.Inject
 

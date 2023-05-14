@@ -27,10 +27,10 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import coil.compose.rememberAsyncImagePainter
 import com.example.animeapp.R
-import com.example.domain.AnimeCharacter
+import com.example.domain.model.AnimeCharacter
 
 @Composable
-fun CharacterCards(characters: List<AnimeCharacter>) {
+fun CharacterCards(characters: List<AnimeCharacter>, onCharacterClick: (Int) -> Unit) {
     LazyRow {
         items(characters.size) { index ->
             val character = characters[index]
@@ -39,7 +39,7 @@ fun CharacterCards(characters: List<AnimeCharacter>) {
                     .padding(8.dp)
                     .width(120.dp)
                     .height(150.dp)
-                    .clickable {  },
+                    .clickable { onCharacterClick(character.id) },
             ) {
                 Column(
                     modifier = Modifier

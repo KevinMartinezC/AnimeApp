@@ -10,5 +10,6 @@
     <string name="japanese_name">Japanese Name :</string>
     <string name="image_cover">image cover</string>
     <string name="character_image">character image</string>
+    <string name="image_character">Image character</string>
 
 </resources>

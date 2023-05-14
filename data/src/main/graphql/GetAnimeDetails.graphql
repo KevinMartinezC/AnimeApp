@@ -10,7 +10,7 @@ query GetAnimeDetails($id: Int!) {
         coverImage {
             large
         }
-        description
+        description(asHtml: false)
         episodes
         averageScore
         genres

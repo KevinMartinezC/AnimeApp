@@ -1,4 +1,4 @@
-package com.example.animeapp.components.detail.utils
+package com.example.animeapp.components.utils
 
 import androidx.annotation.StringRes
 import androidx.compose.runtime.Composable
