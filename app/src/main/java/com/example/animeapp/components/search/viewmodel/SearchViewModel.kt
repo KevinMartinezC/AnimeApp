@@ -8,6 +8,7 @@ import androidx.paging.PagingConfig
 import androidx.paging.PagingData
 import androidx.paging.cachedIn
 import com.example.animeapp.components.favorite.UiState
+import com.example.animeapp.components.search.SearchUiState
 import com.example.animeapp.utils.AnimePagingSource
 import com.example.domain.model.search.Anime
 import com.example.domain.model.search.AnimeSort
@@ -39,6 +40,18 @@ class SearchViewModel @Inject constructor(
         )
     )
 
+    private val _uiStateSearch = MutableStateFlow(
+        SearchUiState(
+            addToFavorites = this::addToFavorites,
+            favoriteAnime = emptySet(),
+            onTypeChanged = this::onTypeChanged,
+            onSortChanged = this::onSortChanged,
+            onSearchChanged = this::onSearchChanged
+        )
+    )
+
+    val uiStateSearch = _uiStateSearch.asStateFlow()
+
     val uiState = _uiState.asStateFlow()
 
     private val _type = MutableStateFlow(AnimeType.ANIME)
@@ -66,7 +79,7 @@ class SearchViewModel @Inject constructor(
         createPager(type, sort, search).flow
     }.cachedIn(viewModelScope)
 
-    fun addToFavorites(anime: Anime) {
+    private fun addToFavorites(anime: Anime) {
         viewModelScope.launch {
             addFavoriteAnimeUseCase(anime)
             _uiState.value =
@@ -75,17 +88,16 @@ class SearchViewModel @Inject constructor(
         }
     }
 
-    fun applyFilter(
-        type: AnimeType,
-        sort: List<AnimeSort>,
-        search: String? = null
-    ) {
+    private fun onTypeChanged(type: AnimeType) {
         _type.value = type
-        _sort.value = sort
-        _search.value = search
     }
 
-    fun applySearch(search: String? = null) {
-        _search.value = search
+    private fun onSortChanged(sort: AnimeSort) {
+        _sort.value = listOf(sort)
     }
+
+    private fun onSearchChanged(query: String) {
+        _search.value = query
+    }
+
 }
