@@ -17,15 +17,17 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import coil.compose.rememberAsyncImagePainter
 import com.example.animeapp.R
 import com.example.animeapp.components.utils.ShowDescriptionFormat
 import com.example.animeapp.components.utils.formatResourceString
-import com.example.domain.model.AnimeDetails
+import com.example.domain.model.detail.AnimeDetails
+
+private const val DEFAULT_VALUE_SCORES_EMPTY = 0
 
 @Composable
 fun DetailScreen(
@@ -44,7 +46,7 @@ fun DetailScreen(
                 painter = rememberAsyncImagePainter(animeDetails.imageUrl),
                 contentDescription = stringResource(R.string.image_cover),
                 modifier = Modifier
-                    .height(250.dp)
+                    .height(dimensionResource(id = R.dimen.height_250dp))
                     .fillMaxWidth(),
                 contentScale = ContentScale.Crop
             )
@@ -52,63 +54,82 @@ fun DetailScreen(
         Column(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(16.dp)
+                .padding(dimensionResource(id = R.dimen.padding_16dp))
         ) {
             Text(
                 text = animeDetails.title,
                 style = MaterialTheme.typography.headlineLarge,
-                maxLines = 1,
                 overflow = TextOverflow.Ellipsis
             )
-            Spacer(modifier = Modifier.height(8.dp))
+
+            Spacer(modifier = Modifier.height(dimensionResource(id = R.dimen.height_8dp)))
+
             ShowDescriptionFormat(animeDetails.description)
-            Spacer(modifier = Modifier.height(8.dp))
+
+            Spacer(modifier = Modifier.height(dimensionResource(id = R.dimen.height_8dp)))
 
             Text(
-                text = formatResourceString(R.string.episodes, animeDetails.episodes ?: 0),
-                fontSize = 18.sp
+                text = formatResourceString(
+                    R.string.episodes,
+                    animeDetails.episodes ?: DEFAULT_VALUE_SCORES_EMPTY
+                ),
+                style = MaterialTheme.typography.bodyMedium,
+                color = MaterialTheme.colorScheme.onSurface
             )
-            Spacer(modifier = Modifier.height(4.dp))
+
+            Spacer(modifier = Modifier.height(dimensionResource(id = R.dimen.height_8dp)))
+
             Text(
-                text = formatResourceString(R.string.score, animeDetails.averageScore ?: 0),
-                fontSize = 18.sp
+                text = formatResourceString(
+                    R.string.score,
+                    animeDetails.averageScore ?: DEFAULT_VALUE_SCORES_EMPTY
+                ),
+                style = MaterialTheme.typography.bodyMedium,
+                color = MaterialTheme.colorScheme.onSurface
             )
-            Spacer(modifier = Modifier.height(8.dp))
+            Spacer(modifier = Modifier.height(dimensionResource(id = R.dimen.height_8dp)))
 
             Row(
                 horizontalArrangement = Arrangement.SpaceBetween
             ) {
                 Text(
                     text = stringResource(id = R.string.genders),
-                    fontSize = 18.sp,
+                    style = MaterialTheme.typography.bodyMedium,
+                    color = MaterialTheme.colorScheme.onSurface,
                     modifier = Modifier.padding(end = 8.dp)
                 )
                 animeDetails.genres?.take(3)?.forEach { genre ->
                     Text(
                         text = genre,
-                        fontSize = 18.sp,
+                        style = MaterialTheme.typography.bodyMedium,
+                        color = MaterialTheme.colorScheme.onSurface,
                         modifier = Modifier.padding(end = 8.dp)
                     )
                 }
             }
 
-            Spacer(modifier = Modifier.height(8.dp))
+            Spacer(modifier = Modifier.height(dimensionResource(id = R.dimen.height_8dp)))
+
             Text(
                 text = formatResourceString(R.string.englisname, animeDetails.englishName),
-                fontSize = 18.sp
+                style = MaterialTheme.typography.bodyMedium,
+                color = MaterialTheme.colorScheme.onSurface
             )
             Spacer(
-                modifier = Modifier.height(4.dp)
+                modifier = Modifier.height(dimensionResource(id = R.dimen.height_4dp))
             )
             Text(
                 text = formatResourceString(R.string.japanese_name, animeDetails.japaneseName),
-                fontSize = 18.sp
+                style = MaterialTheme.typography.bodyMedium,
+                color = MaterialTheme.colorScheme.onSurface
             )
 
         }
-        CharacterCards(characters = animeDetails.characters ?: emptyList(), onCharacterClick = onCharacterClick)
+        CharacterCards(
+            characters = animeDetails.characters ?: emptyList(),
+            onCharacterClick = onCharacterClick
+        )
 
-        Spacer(modifier = Modifier.height(100.dp))
-
+        Spacer(modifier = Modifier.height(dimensionResource(id = R.dimen.height_100dp)))
     }
 }

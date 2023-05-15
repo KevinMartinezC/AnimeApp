@@ -13,18 +13,18 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.unit.dp
 import coil.compose.rememberAsyncImagePainter
 import com.example.animeapp.R
 import com.example.animeapp.components.utils.ShowDescriptionFormat
-import com.example.domain.model.CharacterInfo
+import com.example.domain.model.character.CharacterInfo
 
 @Composable
 fun CharacterScreen(characterDetails: CharacterInfo) {
     LazyColumn(
-        modifier = Modifier.padding(bottom = 98.dp),
-        verticalArrangement = Arrangement.spacedBy(8.dp)
+        modifier = Modifier.padding(bottom = dimensionResource(id = R.dimen.padding_98dp)),
+        verticalArrangement = Arrangement.spacedBy(dimensionResource(id = R.dimen.spacing_8dp))
     ) {
         item {
             Box(
@@ -35,7 +35,7 @@ fun CharacterScreen(characterDetails: CharacterInfo) {
                     painter = rememberAsyncImagePainter(model = characterDetails.imageUrl),
                     contentDescription = stringResource(R.string.image_character),
                     modifier = Modifier
-                        .size(200.dp)
+                        .size(dimensionResource(id = R.dimen.size_200))
                         .clip(CircleShape),
                     contentScale = ContentScale.Crop
                 )

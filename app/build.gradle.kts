@@ -74,13 +74,8 @@ dependencies {
     kapt(libs.hilt.android.compiler)
     implementation(libs.coilCompose)
     implementation(libs.bundles.paging)
-    implementation("androidx.core:core-ktx:1.7.0")
-    implementation ("org.jsoup:jsoup:1.14.3")
-    implementation ("com.google.accompanist:accompanist-insets:0.23.0")
-
-
-
-
+    implementation (libs.jsoup)
+    implementation (libs.accompanist.insets)
 
 }
 

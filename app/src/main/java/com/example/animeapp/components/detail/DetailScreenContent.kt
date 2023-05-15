@@ -12,12 +12,13 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
-import com.example.animeapp.components.TopBarWithFavoriteIcon
+import com.example.animeapp.components.topbar.TopBarWithFavoriteIcon
 import com.example.animeapp.components.detail.viewmodel.DetailScreenViewModel
 import com.example.animeapp.components.navigation.BottomNavItem
 
 @Composable
 fun DetailScreenContent(id: Int, navController: NavHostController) {
+    
     val viewModel = hiltViewModel<DetailScreenViewModel>()
     val animeDetails by viewModel.animeDetails.collectAsState(null)
 

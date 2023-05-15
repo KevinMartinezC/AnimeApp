@@ -1,6 +1,6 @@
 package com.example.animeapp.components.search.utils
 
-import com.example.domain.model.AnimeSort
+import com.example.domain.model.search.AnimeSort
 
 object AnimeSortUtils {
     private const val POPULARITY = "Popularity (Descending)"

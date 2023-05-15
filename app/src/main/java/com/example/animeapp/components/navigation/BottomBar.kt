@@ -7,7 +7,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
-import com.example.animeapp.ui.theme.AnimeAppTheme
+import com.example.news.theme.MyApplicationTheme
 
 @Composable
 fun BottomBar(navController: NavHostController) {
@@ -28,7 +28,7 @@ fun BottomBar(navController: NavHostController) {
 @Preview(showBackground = true, name = "Bottom Bar")
 @Composable
 fun PreviewBottomBar() {
-    AnimeAppTheme {
+    MyApplicationTheme {
         BottomBar(navController = rememberNavController())
     }
 }

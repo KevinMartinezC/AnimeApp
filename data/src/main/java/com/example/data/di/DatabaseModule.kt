@@ -11,6 +11,7 @@ import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import javax.inject.Singleton
 
+private const val DATABASE_NAME_FAVORITE = "favorite_anime_database"
 @Module
 @InstallIn(SingletonComponent::class)
 object DatabaseModule {
@@ -21,7 +22,7 @@ object DatabaseModule {
         return Room.databaseBuilder(
             context,
             FavoriteDataBase::class.java,
-            "favorite_anime_database"
+            DATABASE_NAME_FAVORITE
         ).build()
     }
 

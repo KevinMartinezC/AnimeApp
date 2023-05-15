@@ -23,12 +23,13 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
-import androidx.compose.ui.unit.dp
 import com.example.animeapp.R
 
-
+private const val MAX_LINE_TEXT_VALUE = 1
+private const val ALPHA_VALUE = 0.08f
 @Composable
 fun DropdownSelector(
     items: List<String>,
@@ -43,18 +44,21 @@ fun DropdownSelector(
         Row(
             modifier = Modifier
                 .clickable(onClick = { expanded = true })
-                .background(MaterialTheme.colorScheme.onSurface.copy(alpha = 0.08f))
-                .padding(horizontal = 8.dp, vertical = 4.dp)
+                .background(MaterialTheme.colorScheme.onSurface.copy(alpha = ALPHA_VALUE))
+                .padding(
+                    horizontal = dimensionResource(id = R.dimen.padding_8dp),
+                    vertical = dimensionResource(id = R.dimen.padding_4dp),
+                )
                 .wrapContentSize()
                 .align(Alignment.CenterStart)
         ) {
             Text(
                 text = text.value,
-                style = MaterialTheme.typography.bodySmall,
-                maxLines = 1,
+                style = MaterialTheme.typography.bodyMedium,
+                maxLines = MAX_LINE_TEXT_VALUE,
                 overflow = TextOverflow.Ellipsis
             )
-            Spacer(modifier = Modifier.width(8.dp))
+            Spacer(modifier = Modifier.width(dimensionResource(id = R.dimen.wight_8dp)))
             Icon(
                 Icons.Filled.ArrowDropDown,
                 contentDescription = stringResource(R.string.filter),

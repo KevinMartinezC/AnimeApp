@@ -15,18 +15,19 @@ import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.dimensionResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import coil.compose.rememberAsyncImagePainter
 import com.example.animeapp.R
-import com.example.domain.model.Anime
+import com.example.domain.model.search.Anime
 
 private const val MAX_LINE_TEXT = 3
 
@@ -41,7 +42,7 @@ fun AnimeCard(
     val isFavorite = favoriteAnime.contains(anime.id)
     Card(
         shape = RoundedCornerShape(dimensionResource(id = R.dimen.rounder_corner_4)),
-        elevation = CardDefaults.cardElevation(15.dp),
+        elevation = CardDefaults.cardElevation(dimensionResource(id = R.dimen.elevation_15)),
         modifier = modifier
             .size(
                 width = dimensionResource(id = R.dimen.wight_150dp),
@@ -69,14 +70,16 @@ fun AnimeCard(
                     .padding(dimensionResource(id = R.dimen.padding_2dp))
                     .weight(1f),
                 textAlign = TextAlign.Center,
-                maxLines = MAX_LINE_TEXT
+                maxLines = MAX_LINE_TEXT,
+                style = MaterialTheme.typography.bodyLarge,
+                color = MaterialTheme.colorScheme.onSurface
             )
             IconButton(
                 onClick = { onToggleFavorite(anime) },
             ) {
                 Icon(
                     imageVector = if (isFavorite) Icons.Filled.Favorite else Icons.Filled.FavoriteBorder,
-                    contentDescription = "Add to Favorites",
+                    contentDescription = stringResource(R.string.add_to_favorites),
                     tint = Color.Red
                 )
             }

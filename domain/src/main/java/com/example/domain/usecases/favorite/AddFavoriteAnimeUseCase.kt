@@ -1,6 +1,6 @@
 package com.example.domain.usecases.favorite
 
-import com.example.domain.FavoriteAnime
+import com.example.domain.model.favorite.FavoriteAnime
 import com.example.domain.repositories.FavoriteRepository
 import javax.inject.Inject
 

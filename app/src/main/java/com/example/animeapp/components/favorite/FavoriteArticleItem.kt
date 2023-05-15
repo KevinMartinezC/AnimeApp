@@ -20,11 +20,11 @@ import androidx.compose.ui.draw.scale
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.layout.layout
+import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.unit.dp
 import coil.compose.rememberAsyncImagePainter
 import com.example.animeapp.R
-import com.example.domain.FavoriteAnime
+import com.example.domain.model.favorite.FavoriteAnime
 import kotlin.math.absoluteValue
 
 
@@ -49,8 +49,7 @@ fun FavoriteArticleItem(
     modifier: Modifier = Modifier,
     removeFromFavorites: (FavoriteAnime) -> Unit,
 ) {
-    val painter = rememberAsyncImagePainter(model = favoriteArticle.imageUrl)
-
+    
     val pageOffset = (
             (pagerState.currentPage - currentPage) + pagerState.currentPageOffsetFraction
             ).absoluteValue
@@ -73,13 +72,13 @@ fun FavoriteArticleItem(
             modifier = Modifier.fillMaxSize()
         ) {
             Image(
-                painter = painter,
-                contentDescription = "image",
+                painter = rememberAsyncImagePainter(model = favoriteArticle.imageUrl),
+                contentDescription = stringResource(R.string.image),
                 modifier = Modifier.fillMaxSize(),
                 contentScale = ContentScale.Crop
             )
 
-            val spacing = 8.dp
+            val spacing = dimensionResource(id = R.dimen.spacing_8dp)
 
             IconButton(
                 onClick = { removeFromFavorites(favoriteArticle) },
@@ -94,7 +93,7 @@ fun FavoriteArticleItem(
                             )
                         }
                     }
-                    .padding(8.dp)
+                    .padding(dimensionResource(id = R.dimen.padding_8dp))
                     .background(
                         color = Color.Black.copy(alpha = TRANSPARENT_BLACK),
                         shape = CircleShape

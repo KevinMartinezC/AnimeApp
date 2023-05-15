@@ -17,12 +17,12 @@ import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import androidx.paging.compose.collectAsLazyPagingItems
-import com.example.animeapp.components.TopBarWithFavoriteIcon
-import com.example.animeapp.components.favorite.FavoriteViewModel
+import com.example.animeapp.components.topbar.TopBarWithFavoriteIcon
+import com.example.animeapp.components.favorite.viewmodel.FavoriteViewModel
 import com.example.animeapp.components.navigation.BottomNavItem
-import com.example.animeapp.viewmodel.AnimeListViewModel
-import com.example.domain.model.AnimeSort
-import com.example.domain.model.AnimeType
+import com.example.animeapp.components.search.viewmodel.AnimeListViewModel
+import com.example.domain.model.search.AnimeSort
+import com.example.domain.model.search.AnimeType
 
 @Composable
 fun SearchScreenContent(

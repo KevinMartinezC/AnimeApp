@@ -22,6 +22,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.dimensionResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
 import androidx.navigation.NavHostController
 import androidx.paging.LoadState
@@ -29,9 +30,9 @@ import androidx.paging.compose.LazyPagingItems
 import com.example.animeapp.R
 import com.example.animeapp.components.favorite.UiState
 import com.example.animeapp.components.search.filter.FilterOptions
-import com.example.domain.model.Anime
-import com.example.domain.model.AnimeSort
-import com.example.domain.model.AnimeType
+import com.example.domain.model.search.Anime
+import com.example.domain.model.search.AnimeSort
+import com.example.domain.model.search.AnimeType
 
 @Composable
 fun SearchScreen(
@@ -60,7 +61,7 @@ fun SearchScreen(
                 searchQuery = newValue
                 onSearchChanged(newValue)
             },
-            label = { Text("Search") },
+            label = { Text(stringResource(id = R.string.search)) },
             singleLine = true,
             keyboardActions = KeyboardActions(onDone = { onSearchChanged(searchQuery) }),
             keyboardOptions = KeyboardOptions(imeAction = ImeAction.Search)

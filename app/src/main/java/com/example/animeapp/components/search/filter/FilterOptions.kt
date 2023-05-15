@@ -6,11 +6,12 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.unit.dp
+import androidx.compose.ui.res.dimensionResource
+import com.example.animeapp.R
 import com.example.animeapp.components.search.utils.AnimeSortUtils
 import com.example.animeapp.components.search.utils.mapDisplayNameToAnimeSort
-import com.example.domain.model.AnimeSort
-import com.example.domain.model.AnimeType
+import com.example.domain.model.search.AnimeSort
+import com.example.domain.model.search.AnimeType
 
 
 @Composable
@@ -27,7 +28,7 @@ fun FilterOptions(
         horizontalArrangement = Arrangement.SpaceEvenly,
         modifier = Modifier
             .fillMaxWidth()
-            .padding(vertical = 8.dp)
+            .padding(vertical = dimensionResource(id = R.dimen.padding_8dp))
     ) {
         DropdownSelector(
             items = typeItems,

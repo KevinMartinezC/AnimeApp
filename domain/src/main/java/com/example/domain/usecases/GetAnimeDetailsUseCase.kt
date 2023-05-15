@@ -1,6 +1,6 @@
 package com.example.domain.usecases
 
-import com.example.domain.model.AnimeDetails
+import com.example.domain.model.detail.AnimeDetails
 import com.example.domain.repositories.AnimeRepository
 import javax.inject.Inject
 

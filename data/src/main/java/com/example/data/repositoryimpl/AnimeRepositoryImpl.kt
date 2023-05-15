@@ -7,16 +7,16 @@ import com.example.data.GetAnimeListQuery
 import com.example.data.extentions.executeListQuery
 import com.example.data.extentions.executeQuery
 import com.example.data.extentions.toOptional
-import com.example.data.mapper.toAnime
-import com.example.data.mapper.toAnimeDetails
-import com.example.data.mapper.toCharacterDetails
-import com.example.data.mapper.toGraphQLMediaSort
-import com.example.data.mapper.toGraphQLMediaType
-import com.example.domain.model.Anime
-import com.example.domain.model.AnimeDetails
-import com.example.domain.model.AnimeSort
-import com.example.domain.model.AnimeType
-import com.example.domain.model.CharacterInfo
+import com.example.data.mapper.apollo.toAnime
+import com.example.data.mapper.apollo.toAnimeDetails
+import com.example.data.mapper.apollo.toCharacterDetails
+import com.example.data.mapper.apollo.toGraphQLMediaSort
+import com.example.data.mapper.apollo.toGraphQLMediaType
+import com.example.domain.model.search.Anime
+import com.example.domain.model.detail.AnimeDetails
+import com.example.domain.model.search.AnimeSort
+import com.example.domain.model.search.AnimeType
+import com.example.domain.model.character.CharacterInfo
 import com.example.domain.repositories.AnimeRepository
 import javax.inject.Inject
 
@@ -42,7 +42,6 @@ class AnimeRepositoryImpl @Inject constructor(
             data.Page?.media?.mapNotNull { it?.toAnime() } ?: emptyList()
         }
     }
-
 
     override suspend fun getAnimeDetails(id: Int): AnimeDetails {
         val query = GetAnimeDetailsQuery(id)

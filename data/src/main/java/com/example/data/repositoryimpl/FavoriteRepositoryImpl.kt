@@ -2,9 +2,9 @@ package com.example.data.repositoryimpl
 
 import com.example.data.local.FavoriteAnimeDao
 import com.example.data.local.FavoriteAnimeEntity
-import com.example.data.local.toFavoriteAnime
-import com.example.data.local.toFavoriteAnimeEntity
-import com.example.domain.FavoriteAnime
+import com.example.data.mapper.room.toFavoriteAnime
+import com.example.data.mapper.room.toFavoriteAnimeEntity
+import com.example.domain.model.favorite.FavoriteAnime
 import com.example.domain.repositories.FavoriteRepository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map

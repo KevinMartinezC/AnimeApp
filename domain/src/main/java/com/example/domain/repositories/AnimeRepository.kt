@@ -1,10 +1,10 @@
 package com.example.domain.repositories
 
-import com.example.domain.model.Anime
-import com.example.domain.model.AnimeDetails
-import com.example.domain.model.AnimeSort
-import com.example.domain.model.AnimeType
-import com.example.domain.model.CharacterInfo
+import com.example.domain.model.search.Anime
+import com.example.domain.model.detail.AnimeDetails
+import com.example.domain.model.search.AnimeSort
+import com.example.domain.model.search.AnimeType
+import com.example.domain.model.character.CharacterInfo
 
 interface AnimeRepository {
     suspend fun getAnimeList(

@@ -3,7 +3,7 @@ package com.example.animeapp.components.character.viewmodel
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.domain.model.CharacterInfo
+import com.example.domain.model.character.CharacterInfo
 import com.example.domain.usecases.GetCharacterInfoUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
