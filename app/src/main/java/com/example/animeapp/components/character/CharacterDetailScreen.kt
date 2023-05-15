@@ -15,10 +15,13 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.tooling.preview.Preview
 import coil.compose.rememberAsyncImagePainter
 import com.example.animeapp.R
 import com.example.animeapp.components.utils.ShowDescriptionFormat
+import com.example.animeapp.theme.MyApplicationTheme
 import com.example.domain.model.character.CharacterInfo
+
 
 @Composable
 fun CharacterScreen(characterDetails: CharacterInfo) {
@@ -49,4 +52,21 @@ fun CharacterScreen(characterDetails: CharacterInfo) {
             ShowDescriptionFormat(description = characterDetails.description)
         }
     }
+}
+
+@Preview
+@Composable
+fun PreviewCharacterScreen() {
+    // create a mock CharacterInfo
+
+    MyApplicationTheme {
+        val mockCharacterDetails = CharacterInfo(
+            id = 1,
+            "example",
+            imageUrl = "https://cdn.vox-cdn.com/thumbor/xBIBkXiGLcP-kph3pCX61U7RMPY=/0x0:1400x788/1200x800/filters:focal(588x282:812x506)/cdn.vox-cdn.com/uploads/chorus_image/image/70412073/0377c76083423a1414e4001161e0cdffb0b36e1f_760x400.0.png",
+            description = "Example description"
+        )
+        CharacterScreen(characterDetails = mockCharacterDetails)
+    }
+    // call your CharacterScreen composable with the mock data
 }

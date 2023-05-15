@@ -45,7 +45,7 @@ fun SearchScreenContent(
                 onSearchChanged = uiStateSearch.onSearchChanged,
                 navController = navController,
                 onToggleFavorite = { anime -> uiStateSearch.addToFavorites(anime) },
-                uiState = uiState
+                favoriteAnime = uiState.favoriteAnime
             )
         }
     }

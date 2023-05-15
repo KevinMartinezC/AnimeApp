@@ -1,5 +1,6 @@
 package com.example.animeapp.components.search
 
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
@@ -41,14 +42,13 @@ import androidx.navigation.NavHostController
 import androidx.paging.LoadState
 import androidx.paging.compose.LazyPagingItems
 import com.example.animeapp.R
-import com.example.animeapp.components.favorite.UiState
 import com.example.animeapp.components.search.filter.FilterOptions
 import com.example.domain.model.search.Anime
 import com.example.domain.model.search.AnimeSort
 import com.example.domain.model.search.AnimeType
 import kotlinx.coroutines.launch
 
-private const val UNFOCUS_BORDER_COLOR = 0.5f
+private const val ONFOCUS_BORDER_COLOR = 0.5f
 
 @OptIn(ExperimentalComposeUiApi::class)
 @Composable
@@ -59,7 +59,7 @@ fun SearchScreen(
     onSearchChanged: (String) -> Unit,
     navController: NavHostController,
     onToggleFavorite: (Anime) -> Unit,
-    uiState: UiState,
+    favoriteAnime: Set<Int>,
     modifier: Modifier = Modifier
 ) {
     var selectedType by rememberSaveable { mutableStateOf(AnimeType.ANIME) }
@@ -102,7 +102,7 @@ fun SearchScreen(
             colors = OutlinedTextFieldDefaults.colors(
                 focusedBorderColor = MaterialTheme.colorScheme.primary,
                 unfocusedBorderColor = MaterialTheme.colorScheme.onSurface
-                    .copy(alpha = UNFOCUS_BORDER_COLOR),
+                    .copy(alpha = ONFOCUS_BORDER_COLOR),
             ),
             trailingIcon = {
                 if (searchQuery.isNotEmpty()) {
@@ -144,34 +144,47 @@ fun SearchScreen(
             selectedSort = sort
             onSortChangedState(sort)
         }
-
-        LazyVerticalGrid(
-            columns = GridCells.Fixed(3),
-            contentPadding = PaddingValues(dimensionResource(id = R.dimen.padding_8dp)),
-            modifier = modifier
-        ) {
-            items(animes.itemCount) { index ->
-                val animeItem = animes[index] ?: return@items
-                AnimeCard(
-                    onToggleFavorite = onToggleFavorite,
-                    anime = animeItem,
-                    navController = navController,
-                    favoriteAnime = uiState.favoriteAnime,
-                    modifier = Modifier.padding(dimensionResource(id = R.dimen.padding_4dp))
+        if (animes.itemCount == 0) {
+            Box(
+                modifier = Modifier.fillMaxSize(),
+                contentAlignment = Alignment.Center
+            ) {
+                Text(
+                    stringResource(R.string.no_results),
+                    style = MaterialTheme.typography.titleLarge
                 )
             }
-            animes.apply {
-                if (loadState.append is LoadState.Loading) {
-                    item {
-                        CircularProgressIndicator(
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .wrapContentSize(Alignment.Center)
-                                .padding()
-                        )
+        } else {
+
+            LazyVerticalGrid(
+                columns = GridCells.Fixed(3),
+                contentPadding = PaddingValues(dimensionResource(id = R.dimen.padding_8dp)),
+                modifier = modifier
+            ) {
+                items(animes.itemCount) { index ->
+                    val animeItem = animes[index] ?: return@items
+                    AnimeCard(
+                        onToggleFavorite = onToggleFavorite,
+                        anime = animeItem,
+                        navController = navController,
+                        favoriteAnime = favoriteAnime,
+                        modifier = Modifier.padding(dimensionResource(id = R.dimen.padding_4dp))
+                    )
+                }
+                animes.apply {
+                    if (loadState.append is LoadState.Loading) {
+                        item {
+                            CircularProgressIndicator(
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .wrapContentSize(Alignment.Center)
+                                    .padding()
+                            )
+                        }
                     }
                 }
             }
         }
     }
 }
+

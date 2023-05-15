@@ -7,7 +7,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
-import com.example.news.theme.MyApplicationTheme
+import com.example.animeapp.theme.MyApplicationTheme
 
 @Composable
 fun BottomBar(navController: NavHostController) {

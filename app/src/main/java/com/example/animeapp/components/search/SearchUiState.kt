@@ -10,5 +10,4 @@ data class SearchUiState(
     val onTypeChanged: (AnimeType) -> Unit = {},
     val onSortChanged: (AnimeSort) -> Unit = {},
     val onSearchChanged: (String) -> Unit = {}
-
 )

@@ -1,4 +1,4 @@
-package com.example.news.theme
+package com.example.animeapp.theme
 
 import androidx.compose.ui.graphics.Color
 
@@ -32,34 +32,3 @@ val DarkInversePrimary = Color(0xFF1D3557)
 val DarkSurfaceTint = Color(0xFF1D3557)
 val DarkOutlineVariant = Color(0xFF37474F)
 val DarkScrim = Color(0xFF000000)
-
-// Light Colors (Same as Dark Colors)
-val PrimaryLight = Color(0xFFBDBDBD) // Gray
-val OnPrimary = Color(0xFFFFFFFF) // White
-val PrimaryContainer = Color(0xFF757575) // Dark Gray
-val OnPrimaryContainer = Color(0xFFFFFFFF) // White
-val Secondary = Color(0xFFBDBDBD) // Gray
-val OnSecondary = Color(0xFFFFFFFF) // White
-val SecondaryContainer = Color(0xFF757575) // Dark Gray
-val OnSecondaryContainer = Color(0xFFFFFFFF) // White
-val Tertiary = Color(0xFFBDBDBD) // Gray
-val OnTertiary = Color(0xFFFFFFFF) // White
-val TertiaryContainer = Color(0xFF757575) // Dark Gray
-val OnTertiaryContainer = Color(0xFFFFFFFF) // White
-val Error = Color(0xFFB00020)
-val OnError = Color(0xFFFFFFFF)
-val ErrorContainer = Color(0xFFCF6679)
-val OnErrorContainer = Color(0xFF1B1B1F)
-val Background = Color(0xFF121212)
-val OnBackground = Color(0xFFE0E0E0)
-val Surface = Color(0xFF212121)
-val OnSurface = Color(0xFFE0E0E0)
-val SurfaceVariant = Color(0xFF37474F)
-val OnSurfaceVariant = Color(0xFFE0E0E0)
-val Outline = Color(0xFF546E7A)
-val InverseSurface = Color(0xFF303034)
-val InverseOnSurface = Color(0xFFF2F0F4)
-val InversePrimary = Color(0xFF1D3557)
-val SurfaceTint = Color(0xFF1D3557)
-val OutlineVariant = Color(0xFFC5C6D0)
-val Scrim = Color(0xFF000000)

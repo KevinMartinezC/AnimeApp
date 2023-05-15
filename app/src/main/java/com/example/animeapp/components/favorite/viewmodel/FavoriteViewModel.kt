@@ -2,13 +2,14 @@ package com.example.animeapp.components.favorite.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.animeapp.components.favorite.FavoriteUiState
 import com.example.animeapp.components.favorite.UiState
 import com.example.domain.model.favorite.FavoriteAnime
 import com.example.domain.usecases.favorite.GetFavoriteAnimeUseCase
 import com.example.domain.usecases.favorite.RemoveFavoriteAnimeUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
@@ -21,13 +22,23 @@ class FavoriteViewModel@Inject constructor(
 ) : ViewModel()  {
 
     private val _favoriteAnimes = MutableStateFlow<List<FavoriteAnime>>(emptyList())
-    val favoriteAnimes: StateFlow<List<FavoriteAnime>> = _favoriteAnimes
 
     private val _uiState = MutableStateFlow(
         UiState(
             favoriteAnime = emptySet()
         )
     )
+
+
+    private val _uiStateFavorite = MutableStateFlow(
+        FavoriteUiState(
+            removeFromFavorites = this::removeFromFavorites,
+            favoriteAnimes = _favoriteAnimes
+        )
+    )
+
+    val uiStateFavorite = _uiStateFavorite.asStateFlow()
+
 
     init {
         viewModelScope.launch {
@@ -40,7 +51,7 @@ class FavoriteViewModel@Inject constructor(
     }
 
 
-    fun removeFromFavorites(animeId: Int) {
+    private fun removeFromFavorites(animeId: Int) {
         viewModelScope.launch {
             removeFavoriteAnimeUseCase(animeId)
             updateFavoriteAnimeUiState(_uiState.value.favoriteAnime - animeId)

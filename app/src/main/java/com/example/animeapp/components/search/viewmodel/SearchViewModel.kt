@@ -40,6 +40,8 @@ class SearchViewModel @Inject constructor(
         )
     )
 
+    val uiState = _uiState.asStateFlow()
+
     private val _uiStateSearch = MutableStateFlow(
         SearchUiState(
             addToFavorites = this::addToFavorites,
@@ -52,7 +54,6 @@ class SearchViewModel @Inject constructor(
 
     val uiStateSearch = _uiStateSearch.asStateFlow()
 
-    val uiState = _uiState.asStateFlow()
 
     private val _type = MutableStateFlow(AnimeType.ANIME)
     private val _sort = MutableStateFlow<List<AnimeSort>>(emptyList())
@@ -84,7 +85,6 @@ class SearchViewModel @Inject constructor(
             addFavoriteAnimeUseCase(anime)
             _uiState.value =
                 _uiState.value.copy(favoriteAnime = _uiState.value.favoriteAnime + anime.id)
-
         }
     }
 
