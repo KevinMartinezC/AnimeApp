@@ -19,6 +19,9 @@ material3 = "1.1.0-rc01"
 coilComposeVersion = "2.3.0"
 pagingCompose = "1.0.0-alpha19"
 pagingRuntime = "3.1.1"
+roomRuntimeVersion = "2.5.1"
+roomCompilerVersion = "2.5.1"
+roomKtxVersion = "2.5.1"
 
 [libraries]
 apollo-runtime = { module = "com.apollographql.apollo3:apollo-runtime", version.ref = "apolloRuntime" }
@@ -50,10 +53,17 @@ paging-guava = { module = "androidx.paging:paging-guava", version.ref = "pagingR
 paging-runtime = { module = "androidx.paging:paging-runtime", version.ref = "pagingRuntime" }
 paging-rxjava2 = { module = "androidx.paging:paging-rxjava2", version.ref = "pagingRuntime" }
 paging-rxjava3 = { module = "androidx.paging:paging-rxjava3", version.ref = "pagingRuntime" }
+roomRuntime = { module = "androidx.room:room-runtime", version.ref = "roomRuntimeVersion" }
+roomCompiler = { module = "androidx.room:room-compiler", version.ref = "roomCompilerVersion" }
+roomKtx = { module = "androidx.room:room-ktx", version.ref = "roomKtxVersion" }
 
 [plugins]
 
 [bundles]
+room = [
+    "roomRuntime",
+    "roomKtx"
+]
 ui-compose = [
     "ui",
     "uiGraphics",

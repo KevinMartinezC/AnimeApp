@@ -27,6 +27,7 @@ import androidx.navigation.NavHostController
 import androidx.paging.LoadState
 import androidx.paging.compose.LazyPagingItems
 import com.example.animeapp.R
+import com.example.animeapp.components.favorite.UiState
 import com.example.animeapp.components.search.filter.FilterOptions
 import com.example.domain.model.Anime
 import com.example.domain.model.AnimeSort
@@ -39,6 +40,8 @@ fun SearchScreen(
     onSortChanged: (AnimeSort) -> Unit,
     onSearchChanged: (String) -> Unit,
     navController: NavHostController,
+    onToggleFavorite: (Anime) -> Unit,
+    uiState: UiState,
     modifier: Modifier = Modifier
 ) {
     var selectedType by rememberSaveable { mutableStateOf(AnimeType.ANIME) }
@@ -82,8 +85,10 @@ fun SearchScreen(
             items(animes.itemCount) { index ->
                 val animeItem = animes[index] ?: return@items
                 AnimeCard(
+                    onToggleFavorite = onToggleFavorite,
                     anime = animeItem,
                     navController = navController,
+                    favoriteAnime = uiState.favoriteAnime,
                     modifier = Modifier.padding(dimensionResource(id = R.dimen.padding_4dp))
                 )
             }

@@ -1,7 +1,9 @@
 package com.example.data.di
 
-import com.example.data.AnimeRepositoryImpl
+import com.example.data.repositoryimpl.AnimeRepositoryImpl
+import com.example.data.repositoryimpl.FavoriteRepositoryImpl
 import com.example.domain.repositories.AnimeRepository
+import com.example.domain.repositories.FavoriteRepository
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
@@ -15,4 +17,10 @@ abstract class RepositoryModule {
     @Binds
     @Singleton
     abstract fun bindAnimeRepository(animeRepositoryImpl: AnimeRepositoryImpl): AnimeRepository
+
+    @Binds
+    @Singleton
+    abstract fun bindFavoriteRepository(
+        favoriteRepositoryImpl: FavoriteRepositoryImpl
+    ): FavoriteRepository
 }

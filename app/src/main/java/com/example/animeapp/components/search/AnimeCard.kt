@@ -8,11 +8,17 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Favorite
+import androidx.compose.material.icons.filled.FavoriteBorder
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.text.style.TextAlign
@@ -27,9 +33,12 @@ private const val MAX_LINE_TEXT = 3
 @Composable
 fun AnimeCard(
     anime: Anime,
+    onToggleFavorite: (Anime) -> Unit,
+    favoriteAnime: Set<Int>,
     navController: NavHostController,
     modifier: Modifier = Modifier
 ) {
+    val isFavorite = favoriteAnime.contains(anime.id)
     Card(
         shape = RoundedCornerShape(dimensionResource(id = R.dimen.rounder_corner_4)),
         elevation = CardDefaults.cardElevation(15.dp),
@@ -62,6 +71,15 @@ fun AnimeCard(
                 textAlign = TextAlign.Center,
                 maxLines = MAX_LINE_TEXT
             )
+            IconButton(
+                onClick = { onToggleFavorite(anime) },
+            ) {
+                Icon(
+                    imageVector = if (isFavorite) Icons.Filled.Favorite else Icons.Filled.FavoriteBorder,
+                    contentDescription = "Add to Favorites",
+                    tint = Color.Red
+                )
+            }
         }
     }
 }

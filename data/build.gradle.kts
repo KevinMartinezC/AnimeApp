@@ -3,6 +3,7 @@ plugins {
     id("org.jetbrains.kotlin.android")
     id("com.apollographql.apollo3").version("3.8.1")
     kotlin("kapt")
+    id("com.google.devtools.ksp")
     id("com.google.dagger.hilt.android")
 
 }
@@ -57,6 +58,8 @@ dependencies {
     implementation(libs.bundles.hilt)
     kapt(libs.hilt.android.compiler)
     implementation(libs.bundles.paging)
+    implementation(libs.bundles.room)
+    ksp(libs.roomCompiler)
 
 
 }

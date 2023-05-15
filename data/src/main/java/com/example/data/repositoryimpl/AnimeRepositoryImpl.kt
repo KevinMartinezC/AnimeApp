@@ -1,6 +1,9 @@
-package com.example.data
+package com.example.data.repositoryimpl
 
 import com.apollographql.apollo3.ApolloClient
+import com.example.data.CharacterInfoQuery
+import com.example.data.GetAnimeDetailsQuery
+import com.example.data.GetAnimeListQuery
 import com.example.data.extentions.executeListQuery
 import com.example.data.extentions.executeQuery
 import com.example.data.extentions.toOptional

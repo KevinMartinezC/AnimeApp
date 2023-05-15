@@ -11,5 +11,6 @@
     <string name="image_cover">image cover</string>
     <string name="character_image">character image</string>
     <string name="image_character">Image character</string>
+    <string name="delete_icon">Delete Icon</string>
 
 </resources>
