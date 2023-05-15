@@ -5,10 +5,8 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.animeapp.components.favorite.viewmodel.FavoriteViewModel
 
 @Composable
-fun FavoriteScreenContent() {
-
-    val favoriteViewModel = hiltViewModel<FavoriteViewModel>()
-
+fun FavoriteScreenContent(favoriteViewModel: FavoriteViewModel = hiltViewModel()) {
+    
     FavoriteScreen(
         favoriteAnimeFlow = favoriteViewModel.favoriteAnimes,
         removeFromFavorites = favoriteViewModel::removeFromFavorites,

@@ -8,6 +8,7 @@ data class SearchUiState(
     val animeList: List<Anime> = emptyList(),
     val type: AnimeType,
     val sort: List<AnimeSort>,
-    val search: String? = null
+    val search: String? = null,
+
 
 )

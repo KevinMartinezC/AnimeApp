@@ -23,7 +23,11 @@ import com.example.domain.model.character.CharacterInfo
 @Composable
 fun CharacterScreen(characterDetails: CharacterInfo) {
     LazyColumn(
-        modifier = Modifier.padding(bottom = dimensionResource(id = R.dimen.padding_98dp)),
+        modifier = Modifier
+            .padding(
+                start = dimensionResource(id = R.dimen.padding_20dp),
+                end = dimensionResource(id = R.dimen.padding_20dp)
+            ),
         verticalArrangement = Arrangement.spacedBy(dimensionResource(id = R.dimen.spacing_8dp))
     ) {
         item {

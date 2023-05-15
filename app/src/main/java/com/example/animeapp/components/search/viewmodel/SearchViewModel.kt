@@ -7,12 +7,13 @@ import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.PagingData
 import androidx.paging.cachedIn
+import com.example.animeapp.components.favorite.UiState
 import com.example.animeapp.utils.AnimePagingSource
-import com.example.animeapp.components.search.SearchUiState
 import com.example.domain.model.search.Anime
 import com.example.domain.model.search.AnimeSort
 import com.example.domain.model.search.AnimeType
 import com.example.domain.usecases.GetAnimeListUseCase
+import com.example.domain.usecases.favorite.AddFavoriteAnimeUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
@@ -20,20 +21,21 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.flatMapLatest
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 private const val PAGE_SIZE = 10
+
 @HiltViewModel
-class AnimeListViewModel @Inject constructor(
-    private val getAnimeListUseCase: GetAnimeListUseCase
-) : ViewModel() {
+class SearchViewModel @Inject constructor(
+    private val getAnimeListUseCase: GetAnimeListUseCase,
+    private val addFavoriteAnimeUseCase: AddFavoriteAnimeUseCase,
+
+    ) : ViewModel() {
 
     private val _uiState = MutableStateFlow(
-        SearchUiState(
-            animeList = emptyList(),
-            type = AnimeType.ANIME,
-            sort = emptyList(),
-            search = null
+        UiState(
+            favoriteAnime = emptySet()
         )
     )
 
@@ -63,6 +65,15 @@ class AnimeListViewModel @Inject constructor(
     }.flatMapLatest { (type, sort, search) ->
         createPager(type, sort, search).flow
     }.cachedIn(viewModelScope)
+
+    fun addToFavorites(anime: Anime) {
+        viewModelScope.launch {
+            addFavoriteAnimeUseCase(anime)
+            _uiState.value =
+                _uiState.value.copy(favoriteAnime = _uiState.value.favoriteAnime + anime.id)
+
+        }
+    }
 
     fun applyFilter(
         type: AnimeType,

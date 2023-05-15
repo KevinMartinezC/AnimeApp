@@ -17,13 +17,16 @@ import com.example.animeapp.components.detail.viewmodel.DetailScreenViewModel
 import com.example.animeapp.components.navigation.BottomNavItem
 
 @Composable
-fun DetailScreenContent(id: Int, navController: NavHostController) {
+fun DetailScreenContent(
+    id: Int,
+    navController: NavHostController,
+    detailViewModel: DetailScreenViewModel = hiltViewModel()
+) {
     
-    val viewModel = hiltViewModel<DetailScreenViewModel>()
-    val animeDetails by viewModel.animeDetails.collectAsState(null)
+    val animeDetails by detailViewModel.animeDetails.collectAsState(null)
 
     LaunchedEffect(key1 = id) {
-        viewModel.fetchAnimeDetails(id)
+        detailViewModel.fetchAnimeDetails(id)
     }
 
     animeDetails?.let { details ->

@@ -17,9 +17,13 @@ import com.example.animeapp.components.navigation.BottomNavItem
 
 
 @Composable
-fun CharacterScreenContent(characterId: Int, navController: NavHostController) {
-    val viewModel: CharacterScreenViewModel = hiltViewModel()
-    val characterDetails by viewModel.characterDetails.collectAsState()
+fun CharacterScreenContent(
+    characterId: Int,
+    navController: NavHostController,
+    characterViewModel: CharacterScreenViewModel = hiltViewModel()
+
+) {
+    val characterDetails by characterViewModel.characterDetails.collectAsState()
 
     characterDetails?.let { character ->
         Scaffold(
@@ -28,18 +32,20 @@ fun CharacterScreenContent(characterId: Int, navController: NavHostController) {
                     navController.navigate(BottomNavItem.Favorite.route)
                 }
             }
-        ){ innerPadding ->
+        ) { padding ->
             Column(
                 modifier = Modifier
                     .fillMaxSize()
-                    .padding(innerPadding),
+                    .padding(padding),
                 horizontalAlignment = Alignment.CenterHorizontally
-            ){
+            ) {
                 CharacterScreen(characterDetails = character)
             }
         }
     } ?: run {
-        viewModel.fetchCharacterDetails(characterId)
+        characterViewModel.fetchCharacterDetails(characterId)
     }
 }
+
+
 

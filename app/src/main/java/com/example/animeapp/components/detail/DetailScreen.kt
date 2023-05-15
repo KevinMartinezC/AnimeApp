@@ -48,7 +48,7 @@ fun DetailScreen(
                 modifier = Modifier
                     .height(dimensionResource(id = R.dimen.height_250dp))
                     .fillMaxWidth(),
-                contentScale = ContentScale.Crop
+                contentScale = ContentScale.FillHeight
             )
         }
         Column(

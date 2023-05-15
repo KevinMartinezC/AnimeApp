@@ -3,10 +3,10 @@ package com.example.animeapp.components.search
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Favorite
@@ -41,13 +41,11 @@ fun AnimeCard(
 ) {
     val isFavorite = favoriteAnime.contains(anime.id)
     Card(
-        shape = RoundedCornerShape(dimensionResource(id = R.dimen.rounder_corner_4)),
+        shape = RoundedCornerShape( dimensionResource(id = R.dimen.rounder_corner_4)),
         elevation = CardDefaults.cardElevation(dimensionResource(id = R.dimen.elevation_15)),
         modifier = modifier
-            .size(
-                width = dimensionResource(id = R.dimen.wight_150dp),
-                height = dimensionResource(id = R.dimen.height_200dp)
-            )
+            .aspectRatio(3 / 4f)
+            .fillMaxWidth()
             .padding(dimensionResource(id = R.dimen.padding_4dp))
             .clickable {
                 navController.navigate(("detail/${anime.id}"))
@@ -60,22 +58,24 @@ fun AnimeCard(
                 painter = painter,
                 contentDescription = anime.title,
                 modifier = Modifier
-                    .weight(1f)
+                    .weight(2f)
                     .fillMaxWidth(),
-                contentScale = ContentScale.Crop
+                contentScale = ContentScale.Fit
             )
             Text(
                 text = anime.title,
                 modifier = Modifier
-                    .padding(dimensionResource(id = R.dimen.padding_2dp))
+                    .padding(dimensionResource(id = R.dimen.padding_4dp))
                     .weight(1f),
                 textAlign = TextAlign.Center,
                 maxLines = MAX_LINE_TEXT,
-                style = MaterialTheme.typography.bodyLarge,
+                style = MaterialTheme.typography.bodySmall,
                 color = MaterialTheme.colorScheme.onSurface
             )
             IconButton(
                 onClick = { onToggleFavorite(anime) },
+                modifier = Modifier.weight(0.8f)
+
             ) {
                 Icon(
                     imageVector = if (isFavorite) Icons.Filled.Favorite else Icons.Filled.FavoriteBorder,

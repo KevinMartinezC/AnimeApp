@@ -1,6 +1,5 @@
 package com.example.animeapp.components.navigation
 
-import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
 import androidx.navigation.NavType
@@ -15,7 +14,6 @@ import com.example.animeapp.components.search.SearchScreenContent
 @Composable
 fun BottomNavGraph(
     navController: NavHostController,
-    contentPadding: PaddingValues
 ) {
     NavHost(
         navController = navController,
