@@ -12,5 +12,7 @@
     <string name="character_image">character image</string>
     <string name="image_character">Image character</string>
     <string name="delete_icon">Delete Icon</string>
+    <string name="anime">Anime</string>
+    <string name="favorite">Favorite</string>
 
 </resources>

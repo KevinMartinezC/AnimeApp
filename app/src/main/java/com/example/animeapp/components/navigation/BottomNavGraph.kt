@@ -7,8 +7,8 @@ import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
-import com.example.animeapp.components.character.CharacterDetailScreen
-import com.example.animeapp.components.detail.DetailScreen
+import com.example.animeapp.components.character.CharacterScreenContent
+import com.example.animeapp.components.detail.DetailScreenContent
 import com.example.animeapp.components.favorite.FavoriteScreenContent
 import com.example.animeapp.components.search.SearchScreenContent
 
@@ -34,7 +34,7 @@ fun BottomNavGraph(
             arguments = listOf(navArgument("id") { type = NavType.IntType })
         ) { navBackStackEntry ->
             navBackStackEntry.arguments?.getInt("id")?.let { id ->
-                DetailScreen(id = id, navController = navController)
+                DetailScreenContent(id = id, navController = navController)
             }
         }
         composable(
@@ -42,7 +42,7 @@ fun BottomNavGraph(
             arguments = listOf(navArgument("characterId") { type = NavType.IntType })
         ) { navBackStackEntry ->
             navBackStackEntry.arguments?.getInt("characterId")?.let { characterId ->
-                CharacterDetailScreen(characterId = characterId)
+                CharacterScreenContent(characterId = characterId, navController = navController)
             }
         }
     }
