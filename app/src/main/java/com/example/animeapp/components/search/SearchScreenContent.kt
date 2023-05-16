@@ -33,10 +33,10 @@ fun SearchScreenContent(
         }
     ) { innerPadding ->
         Column(
+            horizontalAlignment = Alignment.CenterHorizontally,
             modifier = Modifier
                 .fillMaxSize()
                 .padding(innerPadding),
-            horizontalAlignment = Alignment.CenterHorizontally
         ) {
             SearchScreen(
                 animes = anime,

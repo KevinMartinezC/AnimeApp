@@ -19,9 +19,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.scale
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.layout.layout
+import androidx.compose.ui.platform.LocalInspectionMode
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -76,12 +76,21 @@ fun FavoriteAnimeItem(
         Box(
             modifier = Modifier.fillMaxSize()
         ) {
-            Image(
-                painter = rememberAsyncImagePainter(model = favoriteArticle.imageUrl),
-                contentDescription = stringResource(R.string.image),
-                modifier = Modifier.fillMaxSize(),
-                contentScale = ContentScale.Crop
-            )
+            if (LocalInspectionMode.current) {
+                Image(
+                    painter = painterResource(R.drawable.imagen1),
+                    contentDescription = stringResource(R.string.image),
+                    modifier = Modifier.fillMaxSize(),
+                    contentScale = ContentScale.Crop
+                )
+            } else {
+                Image(
+                    painter = rememberAsyncImagePainter(model = favoriteArticle.imageUrl),
+                    contentDescription = stringResource(R.string.image),
+                    modifier = Modifier.fillMaxSize(),
+                    contentScale = ContentScale.Crop
+                )
+            }
 
             val spacing = dimensionResource(id = R.dimen.spacing_8dp)
 
@@ -114,98 +123,24 @@ fun FavoriteAnimeItem(
     }
 }
 
-@OptIn(ExperimentalFoundationApi::class)
 @Preview
+@OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun PreviewFavoriteAnimeItem() {
-    MyApplicationTheme {
-        val favoriteAnime = FavoriteAnimePreview(
-            id = 1,
-            title = "Anime Title",
-            imageResourceId = painterResource(id = R.drawable.imagen2)
-        )
-
-        val pagerState = rememberPagerState()
-
-        FavoriteAnimeItemPreview(
-            favoriteArticle = favoriteAnime,
-            pagerState = pagerState,
-            currentPage = 0,
-            removeFromFavorites = {}
-        )
-    }
-}
-
-@OptIn(ExperimentalFoundationApi::class)
-@Composable
-fun FavoriteAnimeItemPreview(
-    favoriteArticle: FavoriteAnimePreview,
-    pagerState: PagerState,
-    currentPage: Int,
-    modifier: Modifier = Modifier,
-    removeFromFavorites: (FavoriteAnimePreview) -> Unit,
-) {
-
-    val pageOffset = (
-            (pagerState.currentPage - currentPage) + pagerState.currentPageOffsetFraction
-            ).absoluteValue
-
-    val scale = lerp(
-        start = SCALE_START,
-        stop = SCALE_STOP,
-        fraction = INITIAL_FRACTION_VALUE - pageOffset.coerceIn(
-            PAGE_OFFSET_LOWER_BOUND,
-            PAGE_OFFSET_UPPER_BOUND
-        )
+    val favoriteAnime = FavoriteAnime(
+        id = 1,
+        title = "Anime Title",
+        imageUrl = "https://i.blogs.es/bc1dd2/naruto/840_560.png"
     )
 
-    Card(
-        modifier = modifier
-            .scale(scale)
-            .animateContentSize()
-    ) {
-        Box(
-            modifier = Modifier.fillMaxSize()
-        ) {
-            Image(
-                painter = painterResource(R.drawable.imagen2),
-                contentDescription = stringResource(R.string.image),
-                modifier = Modifier.fillMaxSize(),
-                contentScale = ContentScale.Crop
-            )
-
-            val spacing = dimensionResource(id = R.dimen.spacing_8dp)
-
-            IconButton(
-                onClick = { removeFromFavorites(favoriteArticle) },
-                modifier = Modifier
-                    .layout { measurable, constraints ->
-                        val placeable = measurable.measure(constraints)
-                        layout(placeable.width, placeable.height) {
-                            placeable.place(
-                                x = constraints.maxWidth - placeable.width - spacing.roundToPx(),
-                                y = spacing.roundToPx()
-                            )
-                        }
-                    }
-                    .padding(dimensionResource(id = R.dimen.padding_8dp))
-                    .background(
-                        color = Color.Black.copy(alpha = TRANSPARENT_BLACK),
-                        shape = CircleShape
-                    )
-            ) {
-                Icon(
-                    imageVector = Icons.Default.Delete,
-                    contentDescription = stringResource(R.string.delete_icon),
-                    tint = Color.White
-                )
-            }
-        }
+    val pagerState = rememberPagerState()
+    MyApplicationTheme {
+        FavoriteAnimeItem(
+            favoriteArticle = favoriteAnime,
+            pagerState = pagerState,
+            currentPage = 1,
+            removeFromFavorites = { /* Do something here */ }
+        )
     }
-}
 
-data class FavoriteAnimePreview(
-    val id: Int,
-    val title: String,
-    val imageResourceId: Painter
-)
+}
