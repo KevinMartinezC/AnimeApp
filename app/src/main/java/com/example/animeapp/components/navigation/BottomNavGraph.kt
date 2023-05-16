@@ -6,10 +6,10 @@ import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
-import com.example.animeapp.components.character.CharacterScreenContent
-import com.example.animeapp.components.detail.DetailScreenContent
-import com.example.animeapp.components.favorite.FavoriteScreenContent
-import com.example.animeapp.components.search.SearchScreenContent
+import com.example.animeapp.components.character.CharacterScreen
+import com.example.animeapp.components.detail.DetailScreen
+import com.example.animeapp.components.favorite.FavoriteScreen
+import com.example.animeapp.components.search.SearchScreen
 
 @Composable
 fun BottomNavGraph(
@@ -20,19 +20,19 @@ fun BottomNavGraph(
         startDestination = BottomNavItem.Search.route
     ) {
         composable(route = BottomNavItem.Search.route) {
-            SearchScreenContent(
+            SearchScreen(
                 navController = navController
             )
         }
         composable(route = BottomNavItem.Favorite.route) {
-            FavoriteScreenContent()
+            FavoriteScreen()
         }
         composable(
             route = "detail/{id}",
             arguments = listOf(navArgument("id") { type = NavType.IntType })
         ) { navBackStackEntry ->
             navBackStackEntry.arguments?.getInt("id")?.let { id ->
-                DetailScreenContent(id = id, navController = navController)
+                DetailScreen(id = id, navController = navController)
             }
         }
         composable(
@@ -40,7 +40,7 @@ fun BottomNavGraph(
             arguments = listOf(navArgument("characterId") { type = NavType.IntType })
         ) { navBackStackEntry ->
             navBackStackEntry.arguments?.getInt("characterId")?.let { characterId ->
-                CharacterScreenContent(characterId = characterId, navController = navController)
+                CharacterScreen(characterId = characterId, navController = navController)
             }
         }
     }

@@ -14,8 +14,13 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
@@ -26,8 +31,13 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.navigation.NavHostController
 import coil.compose.rememberAsyncImagePainter
 import com.example.animeapp.R
+import com.example.animeapp.components.detail.viewmodel.DetailScreenViewModel
+import com.example.animeapp.components.navigation.BottomNavItem
+import com.example.animeapp.components.topbar.TopBarWithFavoriteIcon
 import com.example.animeapp.components.utils.ShowDescriptionFormat
 import com.example.animeapp.components.utils.formatResourceString
 import com.example.animeapp.theme.MyApplicationTheme
@@ -38,6 +48,42 @@ private const val DEFAULT_VALUE_SCORES_EMPTY = 0
 
 @Composable
 fun DetailScreen(
+    id: Int,
+    navController: NavHostController,
+    detailViewModel: DetailScreenViewModel = hiltViewModel()
+) {
+
+    val animeDetails by detailViewModel.animeDetails.collectAsState(null)
+
+    LaunchedEffect(key1 = id) {
+        detailViewModel.fetchAnimeDetails(id)
+    }
+
+    animeDetails?.let { details ->
+        Scaffold(
+            topBar = {
+                TopBarWithFavoriteIcon {
+                    navController.navigate(BottomNavItem.Favorite.route)
+                }
+            }
+        ) { innerPadding ->
+            Column(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(innerPadding),
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
+                DetailScreenContent(animeDetails = details, onCharacterClick = { characterId ->
+                    navController.navigate("character/$characterId")
+                })
+            }
+
+        }
+    }
+}
+
+@Composable
+private fun DetailScreenContent(
     animeDetails: AnimeDetails,
     onCharacterClick: (Int) -> Unit
 ) {
@@ -155,7 +201,7 @@ fun DetailScreen(
 
 @Preview
 @Composable
-fun PreviewDetailScreen() {
+private fun PreviewDetailScreen() {
     val animeDetails = AnimeDetails(
         id = 1,
         imageUrl = "https://i.blogs.es/bc1dd2/naruto/840_560.png",
@@ -186,11 +232,10 @@ fun PreviewDetailScreen() {
     )
     MyApplicationTheme {
         Box(modifier = Modifier.background(Color.Black)) {
-            DetailScreen(
+            DetailScreenContent(
                 animeDetails = animeDetails,
-                onCharacterClick = { /* Do something here */ }
+                onCharacterClick = {}
             )
         }
     }
 }
-

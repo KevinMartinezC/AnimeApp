@@ -106,9 +106,10 @@ fun AnimeCard(
         }
     }
 }
+
 @Preview(showBackground = true)
 @Composable
-fun PreviewAnimeCard() {
+private fun PreviewAnimeCard() {
     val anime = Anime(
         id = 1,
         title = "Demon Slayer",
@@ -126,4 +127,3 @@ fun PreviewAnimeCard() {
         )
     }
 }
-
