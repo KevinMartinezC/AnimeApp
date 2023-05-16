@@ -1,5 +1,7 @@
 package com.example.animeapp.components.search
 
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.text.KeyboardActions
@@ -20,11 +22,14 @@ import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
+import androidx.compose.ui.tooling.preview.Preview
 import com.example.animeapp.R
+import com.example.animeapp.theme.MyApplicationTheme
 import kotlinx.coroutines.launch
 
 private const val ONFOCUS_BORDER_COLOR = 0.5f
@@ -95,3 +100,17 @@ fun SearchBar(
         }
     )
 }
+
+@Preview
+@Composable
+fun SearchBarPreview() {
+    MyApplicationTheme {
+        Box(modifier = Modifier.background(Color.Black)) {
+            SearchBar(
+                searchQuery = "Naruto",
+                onSearchChanged = {}
+            )
+        }
+    }
+}
+
