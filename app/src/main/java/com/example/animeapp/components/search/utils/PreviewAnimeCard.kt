@@ -1,4 +1,4 @@
-package com.example.animeapp.components.search
+package com.example.animeapp.components.search.utils
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
@@ -20,27 +20,20 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.NavHostController
-import androidx.navigation.compose.rememberNavController
-import coil.compose.rememberAsyncImagePainter
 import com.example.animeapp.R
-import com.example.animeapp.components.search.utils.PreviewAnime
-import com.example.animeapp.components.search.utils.PreviewAnimeCard
-import com.example.animeapp.theme.MyApplicationTheme
-import com.example.domain.model.search.Anime
 
-private const val MAX_LINE_TEXT = 3
 
 @Composable
-fun AnimeCard(
-    anime: Anime,
-    onToggleFavorite: (Anime) -> Unit,
+fun PreviewAnimeCard(
+    anime: PreviewAnime,
+    onToggleFavorite: (PreviewAnime) -> Unit,
     favoriteAnime: Set<Int>,
     navController: NavHostController,
     modifier: Modifier = Modifier
@@ -59,7 +52,7 @@ fun AnimeCard(
 
     ) {
         Column(modifier = Modifier.fillMaxSize()) {
-            val painter = rememberAsyncImagePainter(model = anime.imageUrl)
+            val painter = painterResource(id = R.drawable.imagen1)
             Image(
                 painter = painter,
                 contentDescription = anime.title,
@@ -74,7 +67,7 @@ fun AnimeCard(
                     .padding(dimensionResource(id = R.dimen.padding_4dp))
                     .weight(1f),
                 textAlign = TextAlign.Center,
-                maxLines = MAX_LINE_TEXT,
+                maxLines = 2,
                 style = MaterialTheme.typography.bodySmall,
                 color = MaterialTheme.colorScheme.onSurface
             )
@@ -93,27 +86,8 @@ fun AnimeCard(
     }
 }
 
-@Preview
-@Composable
-fun Preview() {
-    val anime = PreviewAnime(
-        id = 1,
-        title = "Demon Slayer",
-        imageResId =  painterResource(id = R.drawable.imagen1)
-    )
-
-    val onToggleFavorite: (PreviewAnime) -> Unit = { /* TODO */ }
-    val favoriteAnime = setOf<Int>()
-    val navController = rememberNavController()
-
-    MyApplicationTheme {
-        PreviewAnimeCard(
-            anime = anime,
-            onToggleFavorite = onToggleFavorite,
-            favoriteAnime = favoriteAnime,
-            navController = navController
-        )
-    }
-}
-
-
+data class PreviewAnime(
+    val id: Int,
+    val title: String,
+    val imageResId: Painter
+)
