@@ -9,7 +9,9 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.tooling.preview.Preview
 import com.example.animeapp.R
+import com.example.animeapp.theme.MyApplicationTheme
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -26,3 +28,12 @@ fun TopBarWithFavoriteIcon(onFavoriteIconClick: () -> Unit) {
         }
     )
 }
+
+@Preview
+@Composable
+fun TopBarWithFavoriteIconPreview() {
+    MyApplicationTheme {
+        TopBarWithFavoriteIcon(onFavoriteIconClick = { /* Do something here */ })
+    }
+}
+

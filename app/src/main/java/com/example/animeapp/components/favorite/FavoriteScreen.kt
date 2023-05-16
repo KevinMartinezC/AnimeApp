@@ -17,10 +17,13 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalConfiguration
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.animeapp.R
 import com.example.animeapp.components.favorite.utils.isLandscape
+import com.example.animeapp.theme.MyApplicationTheme
 import com.example.domain.model.favorite.FavoriteAnime
 import kotlinx.coroutines.flow.StateFlow
 
@@ -71,12 +74,86 @@ fun FavoriteScreen(
                 )
             } else {
                 val favoriteArticle = favoriteArticles[page]
-                FavoriteArticleItem(
+                FavoriteAnimeItem(
                     favoriteArticle = favoriteArticle,
                     pagerState = pagerState,
                     currentPage = page,
                     modifier = Modifier.size(cardWidth, cardHeight),
                     removeFromFavorites = { article -> removeFromFavorites(article.id) },
+                )
+            }
+        }
+    }
+}
+
+@Preview
+@Composable
+fun PreviewFavoriteScreen() {
+    MyApplicationTheme {
+        val favoriteAnimes = listOf(
+            FavoriteAnimePreview(
+                id = 1,
+                title = "Anime Title",
+                imageResourceId = painterResource(id = R.drawable.imagen1)
+            ),
+            FavoriteAnimePreview(
+                id = 2,
+                title = "Anime Title 2",
+                imageResourceId = painterResource(id = R.drawable.imagen2)
+            )
+        )
+        FavoriteScreen(
+            favoriteAnimes = favoriteAnimes,
+            removeFromFavorites = {}
+        )
+    }
+}
+
+@OptIn(ExperimentalFoundationApi::class)
+@Composable
+fun FavoriteScreen(
+    favoriteAnimes: List<FavoriteAnimePreview>,
+    removeFromFavorites: (FavoriteAnimePreview) -> Unit,
+) {
+
+    val pagerState = rememberPagerState()
+    val fling = PagerDefaults.flingBehavior(
+        state = pagerState,
+        pagerSnapDistance = PagerSnapDistance.atMost(PAGER_SNAP_DISTANCE)
+    )
+    val screenWidth = LocalConfiguration.current.screenWidthDp.dp
+    val screenHeight = LocalConfiguration.current.screenHeightDp.dp
+    val isLandscape = isLandscape()
+    val cardWidthFactor = if (isLandscape) CARD_WIDTH_FACTOR_LANDSCAPE else CARD_WIDTH_FACTOR
+    val cardHeightFactor = if (isLandscape) CARD_HEIGHT_FACTOR_LANDSCAPE else CARD_HEIGHT_FACTOR
+    val cardWidth = screenWidth * cardWidthFactor
+    val cardHeight = screenHeight * cardHeightFactor
+    val padding = (screenWidth - cardWidth) / 2
+
+    Box(
+        modifier = Modifier.fillMaxSize(),
+        contentAlignment = Alignment.Center
+    ) {
+        HorizontalPager(
+            pageCount = if (favoriteAnimes.isEmpty()) 1 else favoriteAnimes.size,
+            state = pagerState,
+            flingBehavior = fling,
+            contentPadding = PaddingValues(start = padding, end = padding)
+        ) { page ->
+            if (favoriteAnimes.isEmpty()) {
+                Text(
+                    text = stringResource(R.string.no_favorites_added_yet),
+                    style = MaterialTheme.typography.headlineSmall,
+                    color = MaterialTheme.colorScheme.onSurface
+                )
+            } else {
+                val favoriteArticle = favoriteAnimes[page]
+                FavoriteAnimeItemPreview(
+                    favoriteArticle = favoriteArticle,
+                    pagerState = pagerState,
+                    currentPage = page,
+                    modifier = Modifier.size(cardWidth, cardHeight),
+                    removeFromFavorites = removeFromFavorites,
                 )
             }
         }

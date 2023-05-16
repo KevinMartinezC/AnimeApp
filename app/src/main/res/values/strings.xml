@@ -20,5 +20,13 @@
     <string name="search_icon">search icon\n</string>
     <string name="clear_icon">clear bottom</string>
     <string name="no_results">No Results.</string>
+    <string name="one_piece_description">One Piece is a Shonen action-adventure manga written and drawn by Eiichiro Oda, serialized in the anthology Weekly Shonen Jump. Set in a fantasy world dominated by pirates</string>
+    <string name="character_1">Character 1</string>
+    <string name="character_2">Character 2</string>
+    <string name="character_3">Character 3</string>
+    <string name="anime_title">Anime Title</string>
+    <string name="action">Action</string>
+    <string name="adventure">Adventure</string>
+    <string name="fantasy">Fantasy</string>
 
 </resources>

@@ -1,4 +1,4 @@
-package com.example.animeapp.components.detail
+package com.example.animeapp.components.detail.utils
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
@@ -16,30 +16,19 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.dimensionResource
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import coil.compose.rememberAsyncImagePainter
 import com.example.animeapp.R
-import com.example.animeapp.components.detail.utils.AnimeCharacterPreview
-import com.example.animeapp.components.detail.utils.AnimeDetailsPreview
-import com.example.animeapp.components.detail.utils.DetailScreenPreviewContent
 import com.example.animeapp.components.utils.ShowDescriptionFormat
 import com.example.animeapp.components.utils.formatResourceString
-import com.example.animeapp.theme.MyApplicationTheme
-import com.example.domain.model.detail.AnimeDetails
 
-private const val DEFAULT_VALUE_SCORES_EMPTY = 0
 
 @Composable
-fun DetailScreen(
-    animeDetails: AnimeDetails,
-    onCharacterClick: (Int) -> Unit
-) {
+fun DetailScreenPreviewContent(animeDetails: AnimeDetailsPreview, onCharacterClick: (Int) -> Unit) {
     val scrollState = rememberScrollState()
 
     Column(
@@ -49,7 +38,7 @@ fun DetailScreen(
     ) {
         Box {
             Image(
-                painter = rememberAsyncImagePainter(animeDetails.imageUrl),
+                painter = animeDetails.imageUrl,
                 contentDescription = stringResource(R.string.image_cover),
                 modifier = Modifier
                     .height(dimensionResource(id = R.dimen.height_250dp))
@@ -77,7 +66,7 @@ fun DetailScreen(
             Text(
                 text = formatResourceString(
                     R.string.episodes,
-                    animeDetails.episodes ?: DEFAULT_VALUE_SCORES_EMPTY
+                    animeDetails.episodes ?: 0
                 ),
                 style = MaterialTheme.typography.bodyMedium,
                 color = MaterialTheme.colorScheme.onSurface
@@ -88,7 +77,7 @@ fun DetailScreen(
             Text(
                 text = formatResourceString(
                     R.string.score,
-                    animeDetails.averageScore ?: DEFAULT_VALUE_SCORES_EMPTY
+                    animeDetails.averageScore ?: 0
                 ),
                 style = MaterialTheme.typography.bodyMedium,
                 color = MaterialTheme.colorScheme.onSurface
@@ -131,7 +120,7 @@ fun DetailScreen(
             )
 
         }
-        CharacterCards(
+        CharacterCardsPreviewContent(
             characters = animeDetails.characters ?: emptyList(),
             onCharacterClick = onCharacterClick
         )
@@ -140,46 +129,15 @@ fun DetailScreen(
     }
 }
 
-
-@Preview
-@Composable
-fun DetailScreenPreview() {
-
-    MyApplicationTheme {
-        val characters = listOf(
-            AnimeCharacterPreview(
-                id = 1,
-                name = stringResource(R.string.character_1),
-                imageUrl = painterResource(R.drawable.imagen1)
-            ),
-            AnimeCharacterPreview(
-                id = 2,
-                name = stringResource(R.string.character_2),
-                imageUrl = painterResource(R.drawable.imagen1)
-            ),
-            AnimeCharacterPreview(
-                id = 3,
-                name = stringResource(R.string.character_3),
-                imageUrl = painterResource(R.drawable.imagen1)
-            )
-        )
-
-        val animeDetails = AnimeDetailsPreview(
-            id = 1,
-            title = stringResource(R.string.anime_title),
-            imageUrl = painterResource(R.drawable.imagen1),
-            description = stringResource(id = R.string.one_piece_description),
-            episodes = 24,
-            averageScore = 85,
-            genres = listOf(
-                stringResource(R.string.action),
-                stringResource(R.string.adventure), stringResource(R.string.fantasy)
-            ),
-            englishName = stringResource(R.string.englisname),
-            japaneseName = stringResource(id = R.string.japanese_name),
-            characters = characters
-        )
-
-        DetailScreenPreviewContent(animeDetails = animeDetails, onCharacterClick = {})
-    }
-}
+data class AnimeDetailsPreview(
+    val id: Int,
+    val title: String,
+    val imageUrl: Painter,
+    val description: String,
+    val episodes: Int?,
+    val averageScore: Int?,
+    val genres: List<String>?,
+    val englishName: String,
+    val japaneseName: String,
+    val characters: List<AnimeCharacterPreview>?
+)

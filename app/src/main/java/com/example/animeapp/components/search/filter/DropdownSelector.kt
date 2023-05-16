@@ -19,6 +19,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
@@ -26,6 +27,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
+import androidx.compose.ui.tooling.preview.Preview
 import com.example.animeapp.R
 
 private const val MAX_LINE_TEXT_VALUE = 1
@@ -84,4 +86,20 @@ fun DropdownSelector(
             }
         }
     }
+}
+
+@Preview
+@Composable
+fun PreviewDropdownSelector() {
+    val items = listOf("Item 1")
+    var selectedItem by remember { mutableStateOf(items.first()) }
+MaterialTheme{
+    DropdownSelector(
+        items = items,
+        selectedItem = selectedItem,
+        onItemSelected = { item ->
+            selectedItem = item
+        }
+    )
+}
 }

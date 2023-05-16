@@ -7,9 +7,11 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.dimensionResource
+import androidx.compose.ui.tooling.preview.Preview
 import com.example.animeapp.R
 import com.example.animeapp.components.search.utils.AnimeSortUtils
 import com.example.animeapp.components.search.utils.mapDisplayNameToAnimeSort
+import com.example.animeapp.theme.MyApplicationTheme
 import com.example.domain.model.search.AnimeSort
 import com.example.domain.model.search.AnimeType
 
@@ -45,6 +47,25 @@ fun FilterOptions(
                 )?.let { selectedSort ->
                     onSortSelected(selectedSort)
                 }
+            }
+        )
+    }
+}
+
+@Preview
+@Composable
+fun PreviewFilterOptions() {
+    val selectedType = AnimeType.ANIME
+    val selectedSort = AnimeSort.EPISODES_DESC
+    MyApplicationTheme {
+        FilterOptions(
+            type = selectedType,
+            sort = selectedSort,
+            onTypeSelected = {
+                // Handle type selection
+            },
+            onSortSelected = {
+                // Handle sort selection
             }
         )
     }
