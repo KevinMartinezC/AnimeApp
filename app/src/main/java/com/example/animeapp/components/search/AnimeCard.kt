@@ -21,6 +21,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalInspectionMode
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -30,8 +31,6 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import coil.compose.rememberAsyncImagePainter
 import com.example.animeapp.R
-import com.example.animeapp.components.search.utils.PreviewAnime
-import com.example.animeapp.components.search.utils.PreviewAnimeCard
 import com.example.animeapp.theme.MyApplicationTheme
 import com.example.domain.model.search.Anime
 
@@ -64,14 +63,25 @@ fun AnimeCard(
     ) {
         Column(modifier = Modifier.fillMaxSize()) {
             val painter = rememberAsyncImagePainter(model = anime.imageUrl)
-            Image(
-                painter = painter,
-                contentDescription = anime.title,
-                modifier = Modifier
-                    .weight(2f)
-                    .fillMaxWidth(),
-                contentScale = ContentScale.Fit
-            )
+            if (LocalInspectionMode.current) {
+                Image(
+                    painter = painterResource(R.drawable.imagen1),
+                    contentDescription = anime.title,
+                    modifier = Modifier
+                        .weight(2f)
+                        .fillMaxWidth(),
+                    contentScale = ContentScale.Fit
+                )
+            } else {
+                Image(
+                    painter = painter,
+                    contentDescription = anime.title,
+                    modifier = Modifier
+                        .weight(2f)
+                        .fillMaxWidth(),
+                    contentScale = ContentScale.Fit
+                )
+            }
             Text(
                 text = anime.title,
                 modifier = Modifier
@@ -96,28 +106,24 @@ fun AnimeCard(
         }
     }
 }
-
-@Preview
+@Preview(showBackground = true)
 @Composable
-fun Preview() {
-    val anime = PreviewAnime(
+fun PreviewAnimeCard() {
+    val anime = Anime(
         id = 1,
         title = "Demon Slayer",
-        imageResId =  painterResource(id = R.drawable.imagen1)
+        imageUrl = "https://i.blogs.es/bc1dd2/naruto/840_560.png",
     )
 
-    val onToggleFavorite: (PreviewAnime) -> Unit = { /* TODO */ }
-    val favoriteAnime = setOf<Int>()
     val navController = rememberNavController()
 
     MyApplicationTheme {
-        PreviewAnimeCard(
+        AnimeCard(
             anime = anime,
-            onToggleFavorite = onToggleFavorite,
-            favoriteAnime = favoriteAnime,
+            onToggleFavorite = { /* Handle onToggleFavorite */ },
+            favoriteAnime = setOf(1),  // assuming anime with id 1 is favorited
             navController = navController
         )
     }
 }
-
 

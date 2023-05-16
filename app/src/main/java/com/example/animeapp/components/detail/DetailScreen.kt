@@ -1,6 +1,7 @@
 package com.example.animeapp.components.detail
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -16,7 +17,9 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalInspectionMode
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -25,12 +28,10 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import coil.compose.rememberAsyncImagePainter
 import com.example.animeapp.R
-import com.example.animeapp.components.detail.utils.AnimeCharacterPreview
-import com.example.animeapp.components.detail.utils.AnimeDetailsPreview
-import com.example.animeapp.components.detail.utils.DetailScreenPreviewContent
 import com.example.animeapp.components.utils.ShowDescriptionFormat
 import com.example.animeapp.components.utils.formatResourceString
 import com.example.animeapp.theme.MyApplicationTheme
+import com.example.domain.model.detail.AnimeCharacter
 import com.example.domain.model.detail.AnimeDetails
 
 private const val DEFAULT_VALUE_SCORES_EMPTY = 0
@@ -48,14 +49,25 @@ fun DetailScreen(
             .verticalScroll(scrollState)
     ) {
         Box {
-            Image(
-                painter = rememberAsyncImagePainter(animeDetails.imageUrl),
-                contentDescription = stringResource(R.string.image_cover),
-                modifier = Modifier
-                    .height(dimensionResource(id = R.dimen.height_250dp))
-                    .fillMaxWidth(),
-                contentScale = ContentScale.FillHeight
-            )
+            if (LocalInspectionMode.current) {
+                Image(
+                    painter = painterResource(R.drawable.imagen1),
+                    contentDescription = stringResource(R.string.image_cover),
+                    modifier = Modifier
+                        .height(dimensionResource(id = R.dimen.height_250dp))
+                        .fillMaxWidth(),
+                    contentScale = ContentScale.FillHeight
+                )
+            } else {
+                Image(
+                    painter = rememberAsyncImagePainter(animeDetails.imageUrl),
+                    contentDescription = stringResource(R.string.image_cover),
+                    modifier = Modifier
+                        .height(dimensionResource(id = R.dimen.height_250dp))
+                        .fillMaxWidth(),
+                    contentScale = ContentScale.FillHeight
+                )
+            }
         }
         Column(
             modifier = Modifier
@@ -64,6 +76,7 @@ fun DetailScreen(
         ) {
             Text(
                 text = animeDetails.title,
+                color = MaterialTheme.colorScheme.onSurface,
                 style = MaterialTheme.typography.headlineLarge,
                 overflow = TextOverflow.Ellipsis
             )
@@ -140,46 +153,44 @@ fun DetailScreen(
     }
 }
 
-
 @Preview
 @Composable
-fun DetailScreenPreview() {
-
-    MyApplicationTheme {
-        val characters = listOf(
-            AnimeCharacterPreview(
+fun PreviewDetailScreen() {
+    val animeDetails = AnimeDetails(
+        id = 1,
+        imageUrl = "https://i.blogs.es/bc1dd2/naruto/840_560.png",
+        title = "Anime Title",
+        description = stringResource(R.string.one_piece_description),
+        episodes = 24,
+        averageScore = 8,
+        genres = listOf("Action", "Adventure", "Fantasy"),
+        englishName = "English Anime Name",
+        japaneseName = "Japanese Anime Name",
+        characters = listOf(
+            AnimeCharacter(
                 id = 1,
-                name = stringResource(R.string.character_1),
-                imageUrl = painterResource(R.drawable.imagen1)
+                name = "Character 1",
+                imageUrl = "https://i.blogs.es/bc1dd2/naruto/840_560.png"
             ),
-            AnimeCharacterPreview(
+            AnimeCharacter(
                 id = 2,
-                name = stringResource(R.string.character_2),
-                imageUrl = painterResource(R.drawable.imagen1)
+                name = "Character 2",
+                imageUrl = "https://i.blogs.es/bc1dd2/naruto/840_560.png"
             ),
-            AnimeCharacterPreview(
+            AnimeCharacter(
                 id = 3,
-                name = stringResource(R.string.character_3),
-                imageUrl = painterResource(R.drawable.imagen1)
+                name = "Character 3",
+                imageUrl = "https://i.blogs.es/bc1dd2/naruto/840_560.png"
             )
         )
-
-        val animeDetails = AnimeDetailsPreview(
-            id = 1,
-            title = stringResource(R.string.anime_title),
-            imageUrl = painterResource(R.drawable.imagen1),
-            description = stringResource(id = R.string.one_piece_description),
-            episodes = 24,
-            averageScore = 85,
-            genres = listOf(
-                stringResource(R.string.action),
-                stringResource(R.string.adventure), stringResource(R.string.fantasy)
-            ),
-            englishName = stringResource(R.string.englisname),
-            japaneseName = stringResource(id = R.string.japanese_name),
-            characters = characters
-        )
-
-        DetailScreenPreviewContent(animeDetails = animeDetails, onCharacterClick = {})
+    )
+    MyApplicationTheme {
+        Box(modifier = Modifier.background(Color.Black)) {
+            DetailScreen(
+                animeDetails = animeDetails,
+                onCharacterClick = { /* Do something here */ }
+            )
+        }
     }
 }
+

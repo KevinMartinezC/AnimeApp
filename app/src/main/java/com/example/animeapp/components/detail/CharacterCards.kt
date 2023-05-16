@@ -21,6 +21,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalInspectionMode
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -29,8 +30,6 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import coil.compose.rememberAsyncImagePainter
 import com.example.animeapp.R
-import com.example.animeapp.components.detail.utils.AnimeCharacterPreview
-import com.example.animeapp.components.detail.utils.CharacterCardsPreviewContent
 import com.example.animeapp.theme.MyApplicationTheme
 import com.example.domain.model.detail.AnimeCharacter
 
@@ -55,14 +54,25 @@ fun CharacterCards(characters: List<AnimeCharacter>, onCharacterClick: (Int) -> 
                     verticalArrangement = Arrangement.Center,
                     horizontalAlignment = Alignment.CenterHorizontally
                 ) {
-                    Image(
-                        painter = rememberAsyncImagePainter(character.imageUrl),
-                        contentDescription = stringResource(R.string.character_image),
-                        modifier = Modifier
-                            .size(dimensionResource(id = R.dimen.size_64dp))
-                            .clip(CircleShape),
-                        contentScale = ContentScale.Crop
-                    )
+                    if (LocalInspectionMode.current){
+                            Image(
+                                painter = painterResource(R.drawable.imagen1),
+                                contentDescription = stringResource(R.string.character_image),
+                                modifier = Modifier
+                                    .size(dimensionResource(id = R.dimen.size_64dp))
+                                    .clip(CircleShape),
+                                contentScale = ContentScale.Crop
+                            )
+                    }else {
+                        Image(
+                            painter = rememberAsyncImagePainter(character.imageUrl),
+                            contentDescription = stringResource(R.string.character_image),
+                            modifier = Modifier
+                                .size(dimensionResource(id = R.dimen.size_64dp))
+                                .clip(CircleShape),
+                            contentScale = ContentScale.Crop
+                        )
+                    }
                     Box(
                         modifier = Modifier
                             .fillMaxWidth()
@@ -86,27 +96,14 @@ fun CharacterCards(characters: List<AnimeCharacter>, onCharacterClick: (Int) -> 
 
 @Preview
 @Composable
-fun CharacterCardsPreview() {
+fun PreviewCharacterCards() {
     val characters = listOf(
-        AnimeCharacterPreview(
-            id = 1,
-            name = "Character 1",
-            imageUrl = painterResource(R.drawable.imagen1)
-        ),
-        AnimeCharacterPreview(
-            id = 2,
-            name = "Character 2",
-            imageUrl = painterResource(R.drawable.imagen1)
-        ),
-        AnimeCharacterPreview(
-            id = 3,
-            name = "Character 3",
-            imageUrl = painterResource(R.drawable.imagen1)
-        )
+        AnimeCharacter(id = 1, name = "Character 1", imageUrl = "https://i.blogs.es/bc1dd2/naruto/840_560.png"),
+        AnimeCharacter(id = 2, name = "Character 2", imageUrl = "https://i.blogs.es/bc1dd2/naruto/840_560.png"),
+        AnimeCharacter(id = 3, name = "Character 3", imageUrl = "https://i.blogs.es/bc1dd2/naruto/840_560.png")
     )
-
-    MyApplicationTheme {
-        CharacterCardsPreviewContent(characters = characters, onCharacterClick = {})
-    }
-
+MyApplicationTheme {
+    CharacterCards(characters = characters, onCharacterClick = { /* Do something here */ })
 }
+}
+
