@@ -64,6 +64,7 @@ fun DropdownSelector(
             Icon(
                 Icons.Filled.ArrowDropDown,
                 contentDescription = stringResource(R.string.filter),
+                tint = MaterialTheme.colorScheme.surfaceTint,
                 modifier = Modifier
                     .align(Alignment.CenterVertically)
             )

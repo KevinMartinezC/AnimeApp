@@ -80,7 +80,8 @@ fun SearchBar(
                     Icon(
                         imageVector = Icons.Default.Clear,
                         contentDescription = stringResource(R.string.clear_icon),
-                        tint = MaterialTheme.colorScheme.primary
+                        tint = MaterialTheme.colorScheme.onTertiaryContainer
+
                     )
                 }
             } else {
@@ -93,7 +94,7 @@ fun SearchBar(
                     Icon(
                         Icons.Default.Search,
                         contentDescription = stringResource(R.string.search_icon),
-                        tint = MaterialTheme.colorScheme.primary
+                        tint = MaterialTheme.colorScheme.onTertiaryContainer
                     )
                 }
             }

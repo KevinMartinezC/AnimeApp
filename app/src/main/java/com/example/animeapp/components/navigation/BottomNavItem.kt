@@ -13,7 +13,7 @@ sealed class BottomNavItem(
     object Search : BottomNavItem(
         route = "search",
         title = "Search",
-        icon = Icons.Default.Search
+        icon = Icons.Default.Search,
     )
 
     object Favorite : BottomNavItem(
