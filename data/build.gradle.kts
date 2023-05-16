@@ -2,6 +2,9 @@ plugins {
     id("com.android.library")
     id("org.jetbrains.kotlin.android")
     id("com.apollographql.apollo3").version("3.8.1")
+    kotlin("kapt")
+    id("com.google.devtools.ksp")
+    id("com.google.dagger.hilt.android")
 
 }
 
@@ -10,6 +13,11 @@ android {
     compileSdk = 33
 
     defaultConfig {
+        buildConfigField(
+            "String",
+            "ANILIST_API__URL",
+            project.property("AniListApiUrl").toString()
+        )
         minSdk = 24
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
@@ -29,6 +37,9 @@ android {
         sourceCompatibility = JavaVersion.VERSION_17
         targetCompatibility = JavaVersion.VERSION_17
     }
+    buildFeatures {
+        buildConfig = true
+    }
     kotlinOptions {
         jvmTarget = "17"
     }
@@ -37,14 +48,23 @@ android {
 dependencies {
 
     implementation (project(":domain"))
-    implementation("androidx.core:core-ktx:1.9.0")
-    implementation("androidx.appcompat:appcompat:1.6.1")
-    implementation("com.google.android.material:material:1.9.0")
-    testImplementation("junit:junit:4.13.2")
-    androidTestImplementation("androidx.test.ext:junit:1.1.5")
-    androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
-    implementation("com.apollographql.apollo3:apollo-runtime:3.8.1")
+    implementation(libs.coreKtx)
+    implementation(libs.appcompat)
+    testImplementation(libs.junit)
+    androidTestImplementation(libs.androidxTestExtJUnit)
+    androidTestImplementation(libs.espressoCore)
+    implementation(libs.apollo.runtime)
+    implementation(libs.okhttp)
+    implementation(libs.bundles.hilt)
+    kapt(libs.hilt.android.compiler)
+    implementation(libs.bundles.paging)
+    implementation(libs.bundles.room)
+    ksp(libs.roomCompiler)
 
+}
+
+kapt {
+    correctErrorTypes = true
 }
 
 apollo {

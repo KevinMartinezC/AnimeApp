@@ -1,3 +1,32 @@
 <resources>
     <string name="app_name">AnimeApp</string>
+    <string name="navigation_icon">Navigation Icon</string>
+    <string name="filter">Filter</string>
+    <string name="search">Search</string>
+    <string name="episodes">Episodes</string>
+    <string name="score">Score </string>
+    <string name="genders">Genders :</string>
+    <string name="englisname">English Name </string>
+    <string name="japanese_name">Japanese Name</string>
+    <string name="image_cover">image cover</string>
+    <string name="character_image">character image</string>
+    <string name="image_character">Image character</string>
+    <string name="delete_icon">Delete Icon</string>
+    <string name="anime">Anime</string>
+    <string name="favorite">Favorite</string>
+    <string name="image">image</string>
+    <string name="no_favorites_added_yet">No favorites added yet.</string>
+    <string name="add_to_favorites">Add to Favorites</string>
+    <string name="search_icon">search icon\n</string>
+    <string name="clear_icon">clear bottom</string>
+    <string name="no_results">No Results.</string>
+    <string name="one_piece_description">One Piece is a Shonen action-adventure manga written and drawn by Eiichiro Oda, serialized in the anthology Weekly Shonen Jump. Set in a fantasy world dominated by pirates</string>
+    <string name="character_1">Character 1</string>
+    <string name="character_2">Character 2</string>
+    <string name="character_3">Character 3</string>
+    <string name="anime_title">Anime Title</string>
+    <string name="action">Action</string>
+    <string name="adventure">Adventure</string>
+    <string name="fantasy">Fantasy</string>
+
 </resources>
