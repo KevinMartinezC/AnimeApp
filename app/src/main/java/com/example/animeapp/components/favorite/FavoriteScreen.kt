@@ -20,8 +20,10 @@ import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.animeapp.R
 import com.example.animeapp.components.favorite.utils.isLandscape
+import com.example.animeapp.components.favorite.viewmodel.FavoriteViewModel
 import com.example.animeapp.theme.MyApplicationTheme
 import com.example.domain.model.favorite.FavoriteAnime
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -34,9 +36,22 @@ const val CARD_WIDTH_FACTOR_LANDSCAPE = 0.4f
 const val CARD_HEIGHT_FACTOR_LANDSCAPE = 0.5f
 const val PAGER_SNAP_DISTANCE = 4
 
-@OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun FavoriteScreen(
+    favoriteViewModel: FavoriteViewModel = hiltViewModel()
+) {
+
+    val uiStateFavorite by favoriteViewModel.uiStateFavorite.collectAsState()
+
+    FavoriteScreenContent(
+        favoriteAnimeFlow = uiStateFavorite.favoriteAnimes,
+        removeFromFavorites = uiStateFavorite.removeFromFavorites,
+    )
+}
+
+@OptIn(ExperimentalFoundationApi::class)
+@Composable
+private fun FavoriteScreenContent (
     favoriteAnimeFlow: StateFlow<List<FavoriteAnime>>,
     removeFromFavorites: (Int) -> Unit,
 ) {
@@ -57,9 +72,10 @@ fun FavoriteScreen(
     val padding = (screenWidth - cardWidth) / 2
 
     Box(
+        contentAlignment = Alignment.Center,
         modifier = Modifier.fillMaxSize(),
-        contentAlignment = Alignment.Center
-    ) {
+
+        ) {
         HorizontalPager(
             pageCount = if (favoriteArticles.isEmpty()) 1 else favoriteArticles.size,
             state = pagerState,
@@ -88,7 +104,7 @@ fun FavoriteScreen(
 
 @Preview
 @Composable
-fun PreviewFavoriteScreen() {
+private fun PreviewFavoriteScreen() {
     val favoriteAnimeList = MutableStateFlow(
         listOf(
             FavoriteAnime(
@@ -109,12 +125,9 @@ fun PreviewFavoriteScreen() {
         )
     )
     MyApplicationTheme {
-        FavoriteScreen(
+        FavoriteScreenContent(
             favoriteAnimeFlow = favoriteAnimeList,
             removeFromFavorites = { /* Do something here */ }
         )
     }
 }
-
-
-
