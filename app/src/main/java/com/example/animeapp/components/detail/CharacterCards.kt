@@ -34,7 +34,7 @@ import com.example.animeapp.components.detail.utils.CharacterCardsPreviewContent
 import com.example.animeapp.theme.MyApplicationTheme
 import com.example.domain.model.detail.AnimeCharacter
 
-private  const val MAX_LINE_TEXT = 2
+private const val MAX_LINE_TEXT = 2
 
 @Composable
 fun CharacterCards(characters: List<AnimeCharacter>, onCharacterClick: (Int) -> Unit) {
