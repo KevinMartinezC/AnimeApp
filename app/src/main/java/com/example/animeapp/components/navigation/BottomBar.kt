@@ -1,5 +1,6 @@
 package com.example.animeapp.components.navigation
 
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.NavigationBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -15,7 +16,7 @@ fun BottomBar(navController: NavHostController) {
     val navBackStackEntry by navController.currentBackStackEntryAsState()
     val currentDestination = navBackStackEntry?.destination
 
-    NavigationBar {
+    NavigationBar(containerColor = MaterialTheme.colorScheme.tertiaryContainer) {
         BottomNavItem.ALL.forEach { screen ->
             AddItem(
                 screen = screen,
