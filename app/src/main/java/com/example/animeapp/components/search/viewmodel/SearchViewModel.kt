@@ -15,6 +15,8 @@ import com.example.domain.model.search.AnimeSort
 import com.example.domain.model.search.AnimeType
 import com.example.domain.usecases.GetAnimeListUseCase
 import com.example.domain.usecases.favorite.AddFavoriteAnimeUseCase
+import com.example.domain.usecases.favorite.FavoriteAnimeUpdatesUseCase
+import com.example.domain.usecases.favorite.RemoveFavoriteAnimeUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
@@ -31,8 +33,14 @@ private const val PAGE_SIZE = 10
 class SearchViewModel @Inject constructor(
     private val getAnimeListUseCase: GetAnimeListUseCase,
     private val addFavoriteAnimeUseCase: AddFavoriteAnimeUseCase,
+    private val removeFavoriteAnimeUseCase: RemoveFavoriteAnimeUseCase,
+    private val favoriteAnimeUpdatesUseCase: FavoriteAnimeUpdatesUseCase
 
-    ) : ViewModel() {
+) : ViewModel() {
+
+    private val _type = MutableStateFlow(AnimeType.ANIME)
+    private val _sort = MutableStateFlow<List<AnimeSort>>(emptyList())
+    private val _search = MutableStateFlow<String?>(null)
 
     private val _uiState = MutableStateFlow(
         UiState(
@@ -54,10 +62,14 @@ class SearchViewModel @Inject constructor(
 
     val uiStateSearch = _uiStateSearch.asStateFlow()
 
-
-    private val _type = MutableStateFlow(AnimeType.ANIME)
-    private val _sort = MutableStateFlow<List<AnimeSort>>(emptyList())
-    private val _search = MutableStateFlow<String?>(null)
+    init {
+        viewModelScope.launch {
+            favoriteAnimeUpdatesUseCase()
+                .collect { updatedFavoriteAnime ->
+                    _uiState.value = _uiState.value.copy(favoriteAnime = updatedFavoriteAnime)
+                }
+        }
+    }
 
     private fun createPager(
         type: AnimeType,
@@ -82,9 +94,11 @@ class SearchViewModel @Inject constructor(
 
     private fun addToFavorites(anime: Anime) {
         viewModelScope.launch {
-            addFavoriteAnimeUseCase(anime)
-            _uiState.value =
-                _uiState.value.copy(favoriteAnime = _uiState.value.favoriteAnime + anime.id)
+            if (_uiState.value.favoriteAnime.contains(anime.id)) {
+                removeFavoriteAnimeUseCase(anime.id)
+            } else {
+                addFavoriteAnimeUseCase(anime)
+            }
         }
     }
 
@@ -99,5 +113,4 @@ class SearchViewModel @Inject constructor(
     private fun onSearchChanged(query: String) {
         _search.value = query
     }
-
 }

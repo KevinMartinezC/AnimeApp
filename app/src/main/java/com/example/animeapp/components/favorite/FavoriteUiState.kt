@@ -6,6 +6,6 @@ import kotlinx.coroutines.flow.StateFlow
 
 data class FavoriteUiState(
     val removeFromFavorites: (Int) -> Unit = {},
-    val favoriteAnimes: StateFlow<List<FavoriteAnime>> = MutableStateFlow(emptyList())
+    val favoriteAnimesList: StateFlow<List<FavoriteAnime>> = MutableStateFlow(emptyList())
 
 )
