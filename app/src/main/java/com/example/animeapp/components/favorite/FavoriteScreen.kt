@@ -44,7 +44,7 @@ fun FavoriteScreen(
     val uiStateFavorite by favoriteViewModel.uiStateFavorite.collectAsState()
 
     FavoriteScreenContent(
-        favoriteAnimeFlow = uiStateFavorite.favoriteAnimes,
+        favoriteAnimeFlow = uiStateFavorite.favoriteAnimesList,
         removeFromFavorites = uiStateFavorite.removeFromFavorites,
     )
 }

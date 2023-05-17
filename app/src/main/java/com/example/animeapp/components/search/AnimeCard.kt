@@ -44,7 +44,9 @@ fun AnimeCard(
     navController: NavHostController,
     modifier: Modifier = Modifier
 ) {
+
     val isFavorite = favoriteAnime.contains(anime.id)
+    
     Card(
         colors = cardColors(
             containerColor = MaterialTheme.colorScheme.surface,
