@@ -8,6 +8,7 @@ hiltNavigationCompose = "1.0.0"
 javaxInject = "1"
 jsoup = "1.14.3"
 kotlinxCoroutinesCore = "1.7.1"
+leakcanaryAndroid = "2.11"
 lifecycleRuntimeKtx = "2.6.1"
 activityCompose = "1.7.1"
 composeBom = "2023.05.00"
@@ -37,6 +38,7 @@ hilt-navigation-compose = { module = "androidx.hilt:hilt-navigation-compose", ve
 javax-inject = { module = "javax.inject:javax.inject", version.ref = "javaxInject" }
 jsoup = { module = "org.jsoup:jsoup", version.ref = "jsoup" }
 kotlinx-coroutines-core = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version.ref = "kotlinxCoroutinesCore" }
+leakcanary-android = { module = "com.squareup.leakcanary:leakcanary-android", version.ref = "leakcanaryAndroid" }
 lifecycleRuntimeKtx = { module = "androidx.lifecycle:lifecycle-runtime-ktx", version.ref = "lifecycleRuntimeKtx" }
 activityCompose = { module = "androidx.activity:activity-compose", version.ref = "activityCompose" }
 composeBom = { module = "androidx.compose:compose-bom", version.ref = "composeBom" }

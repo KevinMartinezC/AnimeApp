@@ -76,6 +76,7 @@ dependencies {
     implementation(libs.bundles.paging)
     implementation (libs.jsoup)
     implementation (libs.accompanist.insets)
+    debugImplementation (libs.leakcanary.android)
 
 }
 
