@@ -24,6 +24,7 @@ import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
@@ -63,6 +64,7 @@ fun SearchBar(
             .fillMaxWidth()
             .padding(dimensionResource(id = R.dimen.padding_8dp))
             .focusRequester(focusRequester),
+
         textStyle = MaterialTheme.typography.bodyLarge.copy(
             color = MaterialTheme.colorScheme.onSurface
         ),
@@ -73,24 +75,33 @@ fun SearchBar(
         ),
         trailingIcon = {
             if (searchQuery.isNotEmpty()) {
-                IconButton(onClick = {
-                    onSearchChanged("")
-                    focusRequester.requestFocus()
-                }) {
+                IconButton(
+                    onClick = {
+                        onSearchChanged("")
+                        focusRequester.requestFocus()
+                    },
+                    modifier = Modifier.testTag("clearButton")
+                ) {
+
                     Icon(
                         imageVector = Icons.Default.Clear,
                         contentDescription = stringResource(R.string.clear_icon),
-                        tint = MaterialTheme.colorScheme.onTertiaryContainer
+                        tint = MaterialTheme.colorScheme.onTertiaryContainer,
 
                     )
                 }
             } else {
-                IconButton(onClick = {
+
+                IconButton(
+                    onClick = {
                     scope.launch {
                         onSearchChanged(searchQuery)
                         keyBoardController?.hide()
                     }
-                }) {
+                },
+                    modifier = Modifier.testTag("clearButton")
+
+                ) {
                     Icon(
                         Icons.Default.Search,
                         contentDescription = stringResource(R.string.search_icon),

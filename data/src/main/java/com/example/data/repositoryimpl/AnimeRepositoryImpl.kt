@@ -31,6 +31,9 @@ class AnimeRepositoryImpl @Inject constructor(
         sort: List<AnimeSort>,
         search: String?
     ): List<Anime> {
+        if (search.isNullOrEmpty()) {
+            return emptyList()
+        }
         val query = GetAnimeListQuery(
             page.toOptional(),
             perPage.toOptional(),
