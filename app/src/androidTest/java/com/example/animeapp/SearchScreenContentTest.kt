@@ -10,10 +10,11 @@ import androidx.compose.ui.test.onNodeWithTag
 import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.performClick
 import androidx.paging.PagingData
-import androidx.paging.compose.collectAsLazyPagingItems
 import androidx.test.ext.junit.runners.AndroidJUnit4
-import com.example.animeapp.components.search.SearchScreenContent
+import com.example.animeapp.components.search.utils.AnimeSortUtils
+import com.example.animeapp.utils.prepareContent
 import com.example.domain.model.search.Anime
+import com.example.domain.model.search.AnimeSort
 import com.example.domain.model.search.AnimeType
 import junit.framework.TestCase.assertEquals
 import kotlinx.coroutines.flow.flowOf
@@ -46,18 +47,7 @@ class SearchScreenContentUITest {
             )
         )
 
-        composeTestRule.setContent {
-            val animeItems = animes.collectAsLazyPagingItems()
-            SearchScreenContent(
-                animes = animeItems,
-                onTypeChanged = { },
-                onSortChanged = { },
-                onSearchChanged = { },
-                onAnimeSelected = { },
-                onToggleFavorite = { },
-                favoriteAnime = setOf()
-            )
-        }
+        composeTestRule.setContent(prepareContent(animes = animes))
 
         composeTestRule.onNodeWithText("Demon Slayer").assertExists()
         composeTestRule.onNodeWithText("One Piece").assertExists()
@@ -71,31 +61,55 @@ class SearchScreenContentUITest {
             selectedType = it
         }
 
-        composeTestRule.setContent {
-            val animeItems = flowOf(PagingData.empty<Anime>()).collectAsLazyPagingItems()
-            SearchScreenContent(
-                animes = animeItems,
-                onTypeChanged = onTypeChanged,
-                onSortChanged = { },
-                onSearchChanged = { },
-                onAnimeSelected = { },
-                onToggleFavorite = { },
-                favoriteAnime = setOf()
-            )
-        }
+        composeTestRule.setContent(prepareContent(onTypeChanged = onTypeChanged))
 
         composeTestRule.onNodeWithTag("typeDropdown")
             .performClick()
 
-        // Interact with options
         composeTestRule
-            .onNode(hasText(AnimeType.MANGA.toString()).and(hasAnyAncestor(keyIsDefined(
-                SemanticsProperties.IsPopup))))
+            .onNode(
+                hasText(AnimeType.MANGA.toString()).and(
+                    hasAnyAncestor(
+                        keyIsDefined(
+                            SemanticsProperties.IsPopup
+                        )
+                    )
+                )
+            )
             .performClick()
 
-        // Verify
         assertEquals(AnimeType.MANGA, selectedType)
     }
 
+    @Test
+    fun testOnSortChanged() {
+        var selectedSort: AnimeSort? = null
+        val onSortChanged: (AnimeSort) -> Unit = {
+            selectedSort = it
+        }
+
+        composeTestRule.setContent(prepareContent(onSortChanged = onSortChanged))
+
+        composeTestRule.onNodeWithTag("sortDropdown")
+            .performClick()
+
+        AnimeSortUtils.sortDisplayNames[AnimeSort.POPULARITY_DESC]?.let { sortText ->
+            composeTestRule
+                .onNode(
+                    hasText(sortText).and(
+                        hasAnyAncestor(
+                            keyIsDefined(
+                                SemanticsProperties.IsPopup
+                            )
+                        )
+                    )
+                )
+                .performClick()
+        } ?: throw IllegalArgumentException("Expected sort option not found in display names")
+
+        assertEquals(AnimeSort.POPULARITY_DESC, selectedSort)
+    }
 }
+
+
 
