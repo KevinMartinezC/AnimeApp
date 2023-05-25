@@ -37,7 +37,7 @@ fun DropdownSelector(
     items: List<String>,
     selectedItem: String,
     onItemSelected: (String) -> Unit,
-    modifier: Modifier = Modifier,  // add this line
+    modifier: Modifier = Modifier,
 
 ) {
 

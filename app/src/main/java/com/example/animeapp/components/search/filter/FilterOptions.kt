@@ -51,7 +51,8 @@ fun FilterOptions(
                 )?.let { selectedSort ->
                     onSortSelected(selectedSort)
                 }
-            }
+            },
+            modifier = Modifier.testTag("sortDropdown")
         )
     }
 }

@@ -1,7 +1,10 @@
 package com.example.animeapp
 
 import androidx.activity.ComponentActivity
-import androidx.compose.runtime.Composable
+import androidx.compose.ui.semantics.SemanticsProperties
+import androidx.compose.ui.test.SemanticsMatcher.Companion.keyIsDefined
+import androidx.compose.ui.test.hasAnyAncestor
+import androidx.compose.ui.test.hasText
 import androidx.compose.ui.test.junit4.createAndroidComposeRule
 import androidx.compose.ui.test.onNodeWithTag
 import androidx.compose.ui.test.onNodeWithText
@@ -11,7 +14,8 @@ import androidx.paging.compose.collectAsLazyPagingItems
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.example.animeapp.components.search.SearchScreenContent
 import com.example.domain.model.search.Anime
-import kotlinx.coroutines.flow.Flow
+import com.example.domain.model.search.AnimeType
+import junit.framework.TestCase.assertEquals
 import kotlinx.coroutines.flow.flowOf
 import org.junit.Rule
 import org.junit.Test
@@ -22,20 +26,6 @@ class SearchScreenContentUITest {
 
     @get:Rule
     val composeTestRule = createAndroidComposeRule<ComponentActivity>()
-
-    @Composable
-    fun testScreen(animeData: Flow<PagingData<Anime>>) {
-        val animeItems = animeData.collectAsLazyPagingItems()
-        SearchScreenContent(
-            animes = animeItems,
-            onTypeChanged = { /* ... */ },
-            onSortChanged = { /* ... */ },
-            onSearchChanged = { /* ... */ },
-            onAnimeSelected = { /* ... */ },
-            onToggleFavorite = { /* ... */ },
-            favoriteAnime = setOf(/* ... */)
-        )
-    }
 
     @Test
     fun testAnimeListShowsCorrectData() {
@@ -57,7 +47,16 @@ class SearchScreenContentUITest {
         )
 
         composeTestRule.setContent {
-            testScreen(animes)
+            val animeItems = animes.collectAsLazyPagingItems()
+            SearchScreenContent(
+                animes = animeItems,
+                onTypeChanged = { },
+                onSortChanged = { },
+                onSearchChanged = { },
+                onAnimeSelected = { },
+                onToggleFavorite = { },
+                favoriteAnime = setOf()
+            )
         }
 
         composeTestRule.onNodeWithText("Demon Slayer").assertExists()
@@ -66,37 +65,37 @@ class SearchScreenContentUITest {
 
     @Test
     fun testOnTypeChanged() {
-        // Create the test data
-        val animes = flowOf(
-            PagingData.from(
-                listOf(
-                    Anime(
-                        id = 1,
-                        title = "Demon Slayer",
-                        imageUrl = "https://i.blogs.es/bc1dd2/naruto/840_560.png"
-                    ),
-                    Anime(
-                        id = 2,
-                        title = "One Piece",
-                        imageUrl = "https://example.com/one_piece.png"
-                    )
-                )
-            )
-        )
 
-        composeTestRule.setContent {
-            testScreen(animes)
+        var selectedType: AnimeType? = null
+        val onTypeChanged: (AnimeType) -> Unit = {
+            selectedType = it
         }
 
-        // Click on the dropdown menu identified by the test tag
-        composeTestRule.onNodeWithTag("typeDropdown").performClick()
+        composeTestRule.setContent {
+            val animeItems = flowOf(PagingData.empty<Anime>()).collectAsLazyPagingItems()
+            SearchScreenContent(
+                animes = animeItems,
+                onTypeChanged = onTypeChanged,
+                onSortChanged = { },
+                onSearchChanged = { },
+                onAnimeSelected = { },
+                onToggleFavorite = { },
+                favoriteAnime = setOf()
+            )
+        }
 
-        // Select 'MANGA' from the dropdown options
-        composeTestRule.onNodeWithText("MANGA").performClick()
+        composeTestRule.onNodeWithTag("typeDropdown")
+            .performClick()
 
-        // Assert that the selected type is updated
-        // It should now display 'MANGA' as the selected type
-        composeTestRule.onNodeWithText("MANGA").assertExists()
+        // Interact with options
+        composeTestRule
+            .onNode(hasText(AnimeType.MANGA.toString()).and(hasAnyAncestor(keyIsDefined(
+                SemanticsProperties.IsPopup))))
+            .performClick()
+
+        // Verify
+        assertEquals(AnimeType.MANGA, selectedType)
     }
+
 }
 
