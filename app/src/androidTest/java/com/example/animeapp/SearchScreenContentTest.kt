@@ -3,7 +3,9 @@ package com.example.animeapp
 import androidx.activity.ComponentActivity
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.test.junit4.createAndroidComposeRule
+import androidx.compose.ui.test.onNodeWithTag
 import androidx.compose.ui.test.onNodeWithText
+import androidx.compose.ui.test.performClick
 import androidx.paging.PagingData
 import androidx.paging.compose.collectAsLazyPagingItems
 import androidx.test.ext.junit.runners.AndroidJUnit4
@@ -60,6 +62,41 @@ class SearchScreenContentUITest {
 
         composeTestRule.onNodeWithText("Demon Slayer").assertExists()
         composeTestRule.onNodeWithText("One Piece").assertExists()
+    }
+
+    @Test
+    fun testOnTypeChanged() {
+        // Create the test data
+        val animes = flowOf(
+            PagingData.from(
+                listOf(
+                    Anime(
+                        id = 1,
+                        title = "Demon Slayer",
+                        imageUrl = "https://i.blogs.es/bc1dd2/naruto/840_560.png"
+                    ),
+                    Anime(
+                        id = 2,
+                        title = "One Piece",
+                        imageUrl = "https://example.com/one_piece.png"
+                    )
+                )
+            )
+        )
+
+        composeTestRule.setContent {
+            testScreen(animes)
+        }
+
+        // Click on the dropdown menu identified by the test tag
+        composeTestRule.onNodeWithTag("typeDropdown").performClick()
+
+        // Select 'MANGA' from the dropdown options
+        composeTestRule.onNodeWithText("MANGA").performClick()
+
+        // Assert that the selected type is updated
+        // It should now display 'MANGA' as the selected type
+        composeTestRule.onNodeWithText("MANGA").assertExists()
     }
 }
 
