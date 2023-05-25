@@ -63,8 +63,8 @@ fun SearchBar(
         modifier = Modifier
             .fillMaxWidth()
             .padding(dimensionResource(id = R.dimen.padding_8dp))
-            .focusRequester(focusRequester),
-
+            .focusRequester(focusRequester)
+            .testTag("searchBarTextField"),
         textStyle = MaterialTheme.typography.bodyLarge.copy(
             color = MaterialTheme.colorScheme.onSurface
         ),

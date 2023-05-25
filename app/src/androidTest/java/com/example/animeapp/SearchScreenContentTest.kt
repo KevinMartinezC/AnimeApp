@@ -9,6 +9,7 @@ import androidx.compose.ui.test.junit4.createAndroidComposeRule
 import androidx.compose.ui.test.onNodeWithTag
 import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.performClick
+import androidx.compose.ui.test.performTextInput
 import androidx.paging.PagingData
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.example.animeapp.components.search.utils.AnimeSortUtils
@@ -48,7 +49,6 @@ class SearchScreenContentUITest {
         )
 
         composeTestRule.setContent(prepareContent(animes = animes))
-
         composeTestRule.onNodeWithText("Demon Slayer").assertExists()
         composeTestRule.onNodeWithText("One Piece").assertExists()
     }
@@ -109,6 +109,23 @@ class SearchScreenContentUITest {
 
         assertEquals(AnimeSort.POPULARITY_DESC, selectedSort)
     }
+
+    @Test
+    fun testOnSearchChanged(){
+        var searQuery: String? = null
+        val onSearchChanged: (String) -> Unit ={
+            searQuery = it
+        }
+
+        composeTestRule.setContent(prepareContent(onSearchChanged = onSearchChanged))
+        Thread.sleep(1000)
+        composeTestRule
+            .onNodeWithTag("searchBarTextField")
+            .performTextInput("Naruto")
+        Thread.sleep(1000)
+        assertEquals("Naruto", searQuery)
+    }
+
 }
 
 
