@@ -118,12 +118,43 @@ class SearchScreenContentUITest {
         }
 
         composeTestRule.setContent(prepareContent(onSearchChanged = onSearchChanged))
-        Thread.sleep(1000)
         composeTestRule
             .onNodeWithTag("searchBarTextField")
             .performTextInput("Naruto")
-        Thread.sleep(1000)
         assertEquals("Naruto", searQuery)
+    }
+
+    @Test
+    fun testOnAnimeSelected() {
+        var selectedAnime: Anime? = null
+        val onAnimeSelected: (Anime) -> Unit = {
+            selectedAnime = it
+        }
+
+        val animes = flowOf(
+            PagingData.from(
+                listOf(
+                    Anime(
+                        id = 1,
+                        title = "Demon Slayer",
+                        imageUrl = "https://i.blogs.es/bc1dd2/naruto/840_560.png"
+                    ),
+                    Anime(
+                        id = 2,
+                        title = "One Piece",
+                        imageUrl = "https://example.com/one_piece.png"
+                    )
+                )
+            )
+        )
+
+        composeTestRule.setContent(prepareContent(animes = animes, onAnimeSelected = onAnimeSelected))
+
+        // Interact with the anime item
+        composeTestRule.onNode(hasText("Demon Slayer")).performClick()
+
+        // Verify
+        assertEquals("Demon Slayer", selectedAnime?.title)
     }
 
 }
