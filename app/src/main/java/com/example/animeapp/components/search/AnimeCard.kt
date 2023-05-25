@@ -27,8 +27,6 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.navigation.NavHostController
-import androidx.navigation.compose.rememberNavController
 import coil.compose.rememberAsyncImagePainter
 import com.example.animeapp.R
 import com.example.animeapp.theme.MyApplicationTheme
@@ -41,7 +39,7 @@ fun AnimeCard(
     anime: Anime,
     onToggleFavorite: (Anime) -> Unit,
     favoriteAnime: Set<Int>,
-    navController: NavHostController,
+    onAnimeSelected: (Anime) -> Unit,
     modifier: Modifier = Modifier
 ) {
 
@@ -59,7 +57,7 @@ fun AnimeCard(
             .fillMaxWidth()
             .padding(dimensionResource(id = R.dimen.padding_4dp))
             .clickable {
-                navController.navigate(("detail/${anime.id}"))
+                onAnimeSelected(anime)
             }
 
     ) {
@@ -118,14 +116,12 @@ private fun PreviewAnimeCard() {
         imageUrl = "https://i.blogs.es/bc1dd2/naruto/840_560.png",
     )
 
-    val navController = rememberNavController()
-
     MyApplicationTheme {
         AnimeCard(
             anime = anime,
-            onToggleFavorite = { /* Handle onToggleFavorite */ },
-            favoriteAnime = setOf(1),  // assuming anime with id 1 is favorited
-            navController = navController
+            onToggleFavorite = { },
+            favoriteAnime = setOf(1),
+            onAnimeSelected = { },
         )
     }
 }

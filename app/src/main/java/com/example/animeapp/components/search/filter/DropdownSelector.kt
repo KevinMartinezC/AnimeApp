@@ -37,6 +37,8 @@ fun DropdownSelector(
     items: List<String>,
     selectedItem: String,
     onItemSelected: (String) -> Unit,
+    modifier: Modifier = Modifier,  // add this line
+
 ) {
 
     var expanded by rememberSaveable { mutableStateOf(false) }
@@ -44,7 +46,7 @@ fun DropdownSelector(
 
     Box {
         Row(
-            modifier = Modifier
+            modifier = modifier
                 .clickable(onClick = { expanded = true })
                 .background(MaterialTheme.colorScheme.onSurface.copy(alpha = ALPHA_VALUE))
                 .padding(

@@ -18,7 +18,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
-import androidx.navigation.compose.rememberNavController
 import androidx.paging.PagingData
 import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
@@ -59,7 +58,7 @@ fun SearchScreen(
                 onTypeChanged = uiStateSearch.onTypeChanged,
                 onSortChanged = uiStateSearch.onSortChanged,
                 onSearchChanged = uiStateSearch.onSearchChanged,
-                navController = navController,
+                onAnimeSelected = { anime -> navController.navigate("detail/${anime.id}") },
                 onToggleFavorite = { anime -> uiStateSearch.addToFavorites(anime) },
                 favoriteAnime = uiState.favoriteAnime
             )
@@ -68,12 +67,12 @@ fun SearchScreen(
 }
 
 @Composable
-private fun SearchScreenContent(
+fun SearchScreenContent(
     animes: LazyPagingItems<Anime>,
     onTypeChanged: (AnimeType) -> Unit,
     onSortChanged: (AnimeSort) -> Unit,
     onSearchChanged: (String) -> Unit,
-    navController: NavHostController,
+    onAnimeSelected: (Anime) -> Unit,
     onToggleFavorite: (Anime) -> Unit,
     favoriteAnime: Set<Int>,
     modifier: Modifier = Modifier
@@ -112,7 +111,7 @@ private fun SearchScreenContent(
         }
         AnimeGrid(
             animes = animes,
-            navController = navController,
+            onAnimeSelected = onAnimeSelected,
             onToggleFavorite = onToggleFavorite,
             favoriteAnime = favoriteAnime,
             modifier = modifier
@@ -130,14 +129,13 @@ private fun PreviewSearchScreen() {
         imageUrl = "https://i.blogs.es/bc1dd2/naruto/840_560.png",
     )))) .collectAsLazyPagingItems()
 
-    val navController = rememberNavController()
     MyApplicationTheme(darkTheme = true){
         SearchScreenContent(
             animes = animes,
             onTypeChanged = {},
             onSortChanged = {},
             onSearchChanged = {},
-            navController = navController,
+            onAnimeSelected = {},
             onToggleFavorite = {},
             favoriteAnime = setOf(1)
         )

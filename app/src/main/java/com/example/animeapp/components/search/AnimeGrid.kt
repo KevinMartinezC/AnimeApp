@@ -16,7 +16,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.stringResource
-import androidx.navigation.NavHostController
 import androidx.paging.LoadState
 import androidx.paging.compose.LazyPagingItems
 import com.example.animeapp.R
@@ -26,7 +25,7 @@ import com.example.domain.model.search.Anime
 @Composable
 fun AnimeGrid(
     animes: LazyPagingItems<Anime>,
-    navController: NavHostController,
+    onAnimeSelected: (Anime) -> Unit,
     onToggleFavorite: (Anime) -> Unit,
     favoriteAnime: Set<Int>,
     modifier: Modifier = Modifier
@@ -52,7 +51,7 @@ fun AnimeGrid(
                 AnimeCard(
                     onToggleFavorite = onToggleFavorite,
                     anime = animeItem,
-                    navController = navController,
+                    onAnimeSelected = onAnimeSelected,
                     favoriteAnime = favoriteAnime,
                     modifier = Modifier.padding(dimensionResource(id = R.dimen.padding_4dp))
                 )

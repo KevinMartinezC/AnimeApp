@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.tooling.preview.Preview
 import com.example.animeapp.R
@@ -37,7 +38,10 @@ fun FilterOptions(
             selectedItem = type.name,
             onItemSelected = { selected ->
                 onTypeSelected(AnimeType.valueOf(selected))
-            })
+            },
+            modifier = Modifier.testTag("typeDropdown")
+
+        )
         DropdownSelector(
             items = sortItems,
             selectedItem = AnimeSortUtils.sortDisplayNames[sort] ?: sort.name,
