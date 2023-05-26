@@ -148,16 +148,55 @@ class SearchScreenContentUITest {
             )
         )
 
-        composeTestRule.setContent(prepareContent(animes = animes, onAnimeSelected = onAnimeSelected))
+        composeTestRule.setContent(
+            prepareContent(
+                animes = animes,
+                onAnimeSelected = onAnimeSelected
+            )
+        )
 
-        // Interact with the anime item
         composeTestRule.onNode(hasText("Demon Slayer")).performClick()
 
-        // Verify
         assertEquals("Demon Slayer", selectedAnime?.title)
     }
 
+    @Test
+    fun testOnToggleFavorite() {
+        var toggledAnime: Anime? = null
+        val onToggleFavorite: (Anime) -> Unit = {
+            toggledAnime = it
+        }
+
+        val animes = flowOf(
+            PagingData.from(
+                listOf(
+                    Anime(
+                        id = 1,
+                        title = "Demon Slayer",
+                        imageUrl = "https://i.blogs.es/bc1dd2/naruto/840_560.png"
+                    ),
+                    Anime(
+                        id = 2,
+                        title = "One Piece",
+                        imageUrl = "https://example.com/one_piece.png"
+                    )
+                )
+            )
+        )
+
+        composeTestRule.setContent(
+            prepareContent(
+                animes = animes,
+                onToggleFavorite = onToggleFavorite
+            )
+        )
+
+        composeTestRule.onNodeWithTag("FavoriteButton_1").performClick()
+
+        assertEquals("Demon Slayer", toggledAnime?.title)
+    }
 }
+
 
 
 
