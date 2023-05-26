@@ -237,7 +237,6 @@ class SearchScreenContentUITest {
             .assertIsDisplayed()
             .assert(hasContentDescription("Add to Favorites"))
     }
-
 }
 
 

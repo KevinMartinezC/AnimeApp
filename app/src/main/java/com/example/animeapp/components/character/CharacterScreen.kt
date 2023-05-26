@@ -21,6 +21,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalInspectionMode
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -68,14 +69,17 @@ fun CharacterScreen(
 }
 
 @Composable
-private fun CharacterScreenContent(characterDetails: CharacterInfo) {
+fun CharacterScreenContent(
+    characterDetails: CharacterInfo
+) {
     LazyColumn(
         verticalArrangement = Arrangement.spacedBy(dimensionResource(id = R.dimen.spacing_8dp)),
         modifier = Modifier
             .padding(
                 start = dimensionResource(id = R.dimen.padding_20dp),
                 end = dimensionResource(id = R.dimen.padding_20dp)
-            ),
+            )
+            .testTag("CharacterScreenContent"),
     ) {
         item {
             Box(
