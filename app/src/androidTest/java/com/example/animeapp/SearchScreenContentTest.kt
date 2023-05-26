@@ -3,7 +3,10 @@ package com.example.animeapp
 import androidx.activity.ComponentActivity
 import androidx.compose.ui.semantics.SemanticsProperties
 import androidx.compose.ui.test.SemanticsMatcher.Companion.keyIsDefined
+import androidx.compose.ui.test.assert
+import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.hasAnyAncestor
+import androidx.compose.ui.test.hasContentDescription
 import androidx.compose.ui.test.hasText
 import androidx.compose.ui.test.junit4.createAndroidComposeRule
 import androidx.compose.ui.test.onNodeWithTag
@@ -195,6 +198,46 @@ class SearchScreenContentUITest {
 
         assertEquals("Demon Slayer", toggledAnime?.title)
     }
+
+    @Test
+    fun testFavoriteAnimeStatus() {
+        val favoriteAnime: Set<Int> = setOf(1)
+
+        val animes = flowOf(
+            PagingData.from(
+                listOf(
+                    Anime(
+                        id = 1,
+                        title = "Demon Slayer",
+                        imageUrl = "https://i.blogs.es/bc1dd2/naruto/840_560.png"
+                    ),
+                    Anime(
+                        id = 2,
+                        title = "One Piece",
+                        imageUrl = "https://example.com/one_piece.png"
+                    )
+                )
+            )
+        )
+
+        composeTestRule.setContent(
+            prepareContent(
+                animes = animes,
+                favoriteAnime = favoriteAnime
+            )
+        )
+
+        composeTestRule
+            .onNodeWithTag("FavoriteButton_1")
+            .assertIsDisplayed()
+            .assert(hasContentDescription("Add to Favorites"))
+
+        composeTestRule
+            .onNodeWithTag("FavoriteButton_2")
+            .assertIsDisplayed()
+            .assert(hasContentDescription("Add to Favorites"))
+    }
+
 }
 
 
