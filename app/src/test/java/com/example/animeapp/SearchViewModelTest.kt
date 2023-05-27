@@ -97,4 +97,18 @@ class SearchViewModelTest {
 
         assertEquals(newQuery, viewModel.search.value)
     }
+
+    @Test
+    fun `setupFavoriteAnimeUpdates updates favorite anime`() = runTest {
+        val expectedFavoriteAnime = setOf(anime.id)
+        coEvery { favoriteAnimeUpdatesUseCase() } returns flowOf(expectedFavoriteAnime)
+
+        viewModel = SearchViewModel(
+            getAnimeListUseCase,
+            addFavoriteAnimeUseCase,
+            removeFavoriteAnimeUseCase,
+            favoriteAnimeUpdatesUseCase
+        )
+        assertEquals(expectedFavoriteAnime, viewModel.uiState.value.favoriteAnime)
+    }
 }
