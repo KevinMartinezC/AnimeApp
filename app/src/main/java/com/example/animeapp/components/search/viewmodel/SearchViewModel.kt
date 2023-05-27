@@ -1,6 +1,7 @@
 package com.example.animeapp.components.search.viewmodel
 
 
+import androidx.annotation.VisibleForTesting
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.paging.Pager
@@ -42,7 +43,8 @@ class SearchViewModel @Inject constructor(
     private val _sort = MutableStateFlow<List<AnimeSort>>(emptyList())
     private val _search = MutableStateFlow<String?>(null)
 
-    private val _uiState = MutableStateFlow(
+    @VisibleForTesting(otherwise = VisibleForTesting.PROTECTED)
+    val _uiState = MutableStateFlow(
         UiState(
             favoriteAnime = emptySet()
         )
@@ -92,13 +94,15 @@ class SearchViewModel @Inject constructor(
         createPager(type, sort, search).flow
     }.cachedIn(viewModelScope)
 
-    private fun addToFavorites(anime: Anime) {
+    @VisibleForTesting(otherwise = VisibleForTesting.PROTECTED)
+    fun addToFavorites(anime: Anime) {
         viewModelScope.launch {
             if (_uiState.value.favoriteAnime.contains(anime.id)) {
                 removeFavoriteAnimeUseCase(anime.id)
             } else {
                 addFavoriteAnimeUseCase(anime)
             }
+            println("addToFavorites executed")
         }
     }
 
