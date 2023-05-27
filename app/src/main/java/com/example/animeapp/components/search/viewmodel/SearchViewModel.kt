@@ -22,6 +22,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.flatMapLatest
@@ -43,8 +44,11 @@ class SearchViewModel @Inject constructor(
     private val _sort = MutableStateFlow<List<AnimeSort>>(emptyList())
     private val _search = MutableStateFlow<String?>(null)
 
-    @VisibleForTesting(otherwise = VisibleForTesting.PROTECTED)
-    val _uiState = MutableStateFlow(
+    val type: StateFlow<AnimeType> = _type.asStateFlow()
+    val sort: StateFlow<List<AnimeSort>> = _sort.asStateFlow()
+    val search: StateFlow<String?> = _search.asStateFlow()
+
+    private val _uiState = MutableStateFlow(
         UiState(
             favoriteAnime = emptySet()
         )
@@ -66,25 +70,18 @@ class SearchViewModel @Inject constructor(
 
     init {
         viewModelScope.launch {
-            favoriteAnimeUpdatesUseCase()
-                .collect { updatedFavoriteAnime ->
-                    _uiState.value = _uiState.value.copy(favoriteAnime = updatedFavoriteAnime)
-                }
+            favoriteAnimeUpdatesUseCase().collect { updatedFavoriteAnime ->
+                _uiState.value = _uiState.value.copy(favoriteAnime = updatedFavoriteAnime)
+            }
         }
     }
 
     private fun createPager(
-        type: AnimeType,
-        sort: List<AnimeSort>,
-        search: String?
+        type: AnimeType, sort: List<AnimeSort>, search: String?
     ): Pager<Int, Anime> {
-        return Pager(
-            config = PagingConfig(
-                pageSize = PAGE_SIZE,
-                enablePlaceholders = false
-            ),
-            pagingSourceFactory = { AnimePagingSource(getAnimeListUseCase, type, sort, search) }
-        )
+        return Pager(config = PagingConfig(
+            pageSize = PAGE_SIZE, enablePlaceholders = false
+        ), pagingSourceFactory = { AnimePagingSource(getAnimeListUseCase, type, sort, search) })
     }
 
     @OptIn(ExperimentalCoroutinesApi::class)
@@ -106,11 +103,13 @@ class SearchViewModel @Inject constructor(
         }
     }
 
-    private fun onTypeChanged(type: AnimeType) {
+    @VisibleForTesting(otherwise = VisibleForTesting.PROTECTED)
+    fun onTypeChanged(type: AnimeType) {
         _type.value = type
     }
 
-    private fun onSortChanged(sort: AnimeSort) {
+    @VisibleForTesting(otherwise = VisibleForTesting.PROTECTED)
+    fun onSortChanged(sort: AnimeSort) {
         _sort.value = listOf(sort)
     }
 

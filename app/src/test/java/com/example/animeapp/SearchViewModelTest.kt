@@ -2,16 +2,18 @@ package com.example.animeapp
 
 import com.example.animeapp.components.search.viewmodel.SearchViewModel
 import com.example.domain.model.search.Anime
+import com.example.domain.model.search.AnimeSort
+import com.example.domain.model.search.AnimeType
 import com.example.domain.usecases.GetAnimeListUseCase
 import com.example.domain.usecases.favorite.AddFavoriteAnimeUseCase
 import com.example.domain.usecases.favorite.FavoriteAnimeUpdatesUseCase
 import com.example.domain.usecases.favorite.RemoveFavoriteAnimeUseCase
-import dagger.hilt.android.testing.HiltAndroidTest
 import io.mockk.coEvery
 import io.mockk.coVerify
 import io.mockk.mockk
+import junit.framework.TestCase.assertEquals
 import kotlinx.coroutines.flow.flowOf
-import kotlinx.coroutines.test.runBlockingTest
+import kotlinx.coroutines.test.runTest
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
@@ -19,7 +21,6 @@ import org.junit.runner.RunWith
 import org.junit.runners.JUnit4
 
 
-@HiltAndroidTest
 @RunWith(JUnit4::class)
 class SearchViewModelTest {
     private val getAnimeListUseCase: GetAnimeListUseCase = mockk()
@@ -44,7 +45,7 @@ class SearchViewModelTest {
     }
 
     @Test
-    fun `addToFavorites adds anime when it is not in favorites`() = runBlockingTest {
+    fun `addToFavorites adds anime when it is not in favorites`() = runTest {
         viewModel.addToFavorites(anime)
 
         coVerify {
@@ -53,7 +54,7 @@ class SearchViewModelTest {
     }
 
     @Test
-    fun `addToFavorites removes anime when it is in favorites`() = runBlockingTest {
+    fun `addToFavorites removes anime when it is in favorites`() = runTest {
         coEvery { favoriteAnimeUpdatesUseCase() } returns flowOf(setOf(anime.id))
 
         viewModel = SearchViewModel(
@@ -68,5 +69,23 @@ class SearchViewModelTest {
         coVerify {
             removeFavoriteAnimeUseCase.invoke(anime.id)
         }
+    }
+
+    @Test
+    fun `onTypeChanged updates type`() = runTest {
+        val newType = AnimeType.MANGA
+
+        viewModel.onTypeChanged(newType)
+
+        assertEquals(newType, viewModel.type.value)
+    }
+
+    @Test
+    fun `onSortChanged updates sort`() = runTest {
+        val newSort = AnimeSort.EPISODES_DESC
+
+        viewModel.onSortChanged(newSort)
+
+        assertEquals(listOf(newSort), viewModel.sort.value)
     }
 }

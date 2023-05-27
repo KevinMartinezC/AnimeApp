@@ -63,7 +63,7 @@ dependencies {
     implementation(libs.bundles.ui.compose)
     implementation(libs.material3)
     testImplementation(libs.junit)
-    testImplementation("org.junit.jupiter:junit-jupiter:5.8.1")
+    testImplementation(libs.junit.jupiter)
     androidTestImplementation(libs.androidxTestExtJUnit)
     androidTestImplementation(libs.espressoCore)
     androidTestImplementation(platform(libs.composeBom))
@@ -78,22 +78,9 @@ dependencies {
     implementation(libs.jsoup)
     implementation(libs.accompanist.insets)
     debugImplementation(libs.leakcanary.android)
-    testImplementation("io.mockk:mockk:1.13.5")
-    testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.7.1")
-    testImplementation("androidx.arch.core:core-testing:2.2.0")
-
-    // For Robolectric tests.
-    testImplementation("com.google.dagger:hilt-android-testing:2.44")
-    // ...with Kotlin.
-    kaptTest("com.google.dagger:hilt-android-compiler:2.44")
-    // ...with Java.
-    testAnnotationProcessor("com.google.dagger:hilt-android-compiler:2.44")
-// For instrumented tests.
-    androidTestImplementation("com.google.dagger:hilt-android-testing:2.44")
-    // ...with Kotlin.
-    kaptAndroidTest("com.google.dagger:hilt-android-compiler:2.44")
-    // ...with Java.
-    androidTestAnnotationProcessor("com.google.dagger:hilt-android-compiler:2.44")
+    testImplementation(libs.mockk)
+    testImplementation(libs.kotlinx.coroutines.test)
+    testImplementation(libs.core.testing)
 }
 
 kapt {
