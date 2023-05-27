@@ -69,11 +69,7 @@ class SearchViewModel @Inject constructor(
     val uiStateSearch = _uiStateSearch.asStateFlow()
 
     init {
-        viewModelScope.launch {
-            favoriteAnimeUpdatesUseCase().collect { updatedFavoriteAnime ->
-                _uiState.value = _uiState.value.copy(favoriteAnime = updatedFavoriteAnime)
-            }
-        }
+        setupFavoriteAnimeUpdates()
     }
 
     private fun createPager(
@@ -92,6 +88,15 @@ class SearchViewModel @Inject constructor(
     }.cachedIn(viewModelScope)
 
     @VisibleForTesting(otherwise = VisibleForTesting.PROTECTED)
+    fun setupFavoriteAnimeUpdates() {
+        viewModelScope.launch {
+            favoriteAnimeUpdatesUseCase().collect { updatedFavoriteAnime ->
+                _uiState.value = _uiState.value.copy(favoriteAnime = updatedFavoriteAnime)
+            }
+        }
+    }
+
+    @VisibleForTesting(otherwise = VisibleForTesting.PROTECTED)
     fun addToFavorites(anime: Anime) {
         viewModelScope.launch {
             if (_uiState.value.favoriteAnime.contains(anime.id)) {
@@ -99,7 +104,6 @@ class SearchViewModel @Inject constructor(
             } else {
                 addFavoriteAnimeUseCase(anime)
             }
-            println("addToFavorites executed")
         }
     }
 
@@ -113,7 +117,8 @@ class SearchViewModel @Inject constructor(
         _sort.value = listOf(sort)
     }
 
-    private fun onSearchChanged(query: String) {
+    @VisibleForTesting(otherwise = VisibleForTesting.PROTECTED)
+    fun onSearchChanged(query: String) {
         _search.value = query
     }
 }

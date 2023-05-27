@@ -88,4 +88,13 @@ class SearchViewModelTest {
 
         assertEquals(listOf(newSort), viewModel.sort.value)
     }
+
+    @Test
+    fun `onSearchChanged update search query`() = runTest {
+        val newQuery = "Naruto"
+
+        viewModel.onSearchChanged(newQuery)
+
+        assertEquals(newQuery, viewModel.search.value)
+    }
 }
