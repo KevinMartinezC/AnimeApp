@@ -21,12 +21,9 @@ class CharacterScreenViewModel  @Inject constructor(
 
     fun fetchCharacterDetails(id: Int) {
         viewModelScope.launch {
-            try {
-                val details = getCharacterInfoUseCase(id)
-                _characterDetails.value = details
-            } catch (e: Exception) {
-                Log.d("Error","${e.message}")
-            }
+            runCatching { getCharacterInfoUseCase(id) }
+                .onSuccess { details -> _characterDetails.value = details }
+                .onFailure { e -> Log.d("Error", "${e.message}") }
         }
     }
 }
