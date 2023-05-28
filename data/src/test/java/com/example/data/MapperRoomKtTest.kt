@@ -7,7 +7,7 @@ import com.example.domain.model.favorite.FavoriteAnime
 import org.junit.Assert.assertEquals
 import org.junit.Test
 
-class MapperKtTest {
+class MapperRoomKtTest {
     @Test
     fun `verify toFavoriteAnime maps correctly`() {
         // Create a FavoriteAnimeEntity

@@ -51,6 +51,7 @@ dependencies {
     implementation(libs.coreKtx)
     implementation(libs.appcompat)
     testImplementation(libs.junit)
+    testImplementation("org.testng:testng:6.9.6")
     androidTestImplementation(libs.androidxTestExtJUnit)
     androidTestImplementation(libs.espressoCore)
     implementation(libs.apollo.runtime)
