@@ -2,8 +2,11 @@ package com.example.data
 
 import com.example.data.mapper.apollo.toAnime
 import com.example.data.mapper.apollo.toGraphQLMediaSort
+import com.example.data.mapper.apollo.toGraphQLMediaType
 import com.example.data.type.MediaSort
+import com.example.data.type.MediaType
 import com.example.domain.model.search.AnimeSort
+import com.example.domain.model.search.AnimeType
 import org.junit.Assert.assertEquals
 import org.junit.Test
 
@@ -43,5 +46,16 @@ class AnimeMapperApolloTest {
         // Convert and verify START_DATE
         mediaSort = AnimeSort.START_DATE.toGraphQLMediaSort()
         assertEquals(MediaSort.START_DATE, mediaSort)
+    }
+
+    @Test
+    fun `verify toGraphQLMediaType maps  correctly`() {
+        var mediaType = AnimeType.ANIME.toGraphQLMediaType()
+
+        assertEquals(MediaType.ANIME, mediaType)
+
+        mediaType = AnimeType.MANGA.toGraphQLMediaType()
+
+        assertEquals(MediaType.MANGA, mediaType)
     }
 }
