@@ -1,5 +1,6 @@
 package com.example.animeapp.components.favorite.viewmodel
 
+import androidx.annotation.VisibleForTesting
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.animeapp.components.favorite.FavoriteUiState
@@ -41,6 +42,10 @@ class FavoriteViewModel @Inject constructor(
     val uiStateFavorite = _uiStateFavorite.asStateFlow()
 
     init {
+        initializeData()
+    }
+
+    private fun initializeData() {
         viewModelScope.launch {
             getFavoriteAnimeUseCase()
                 .onEach { favoriteAnimeList ->
@@ -50,12 +55,13 @@ class FavoriteViewModel @Inject constructor(
                 }.launchIn(viewModelScope)
 
             favoriteAnimeUpdatesUseCase().collect { updatedFavoriteAnime ->
-                    _uiState.value = _uiState.value.copy(favoriteAnime = updatedFavoriteAnime)
-                }
+                _uiState.value = _uiState.value.copy(favoriteAnime = updatedFavoriteAnime)
+            }
         }
     }
 
-    private fun removeFromFavorites(animeId: Int) {
+    @VisibleForTesting(otherwise = VisibleForTesting.PROTECTED)
+    fun removeFromFavorites(animeId: Int) {
         viewModelScope.launch {
             if (_uiState.value.favoriteAnime.contains(animeId)) {
                 removeFavoriteAnimeUseCase(animeId)

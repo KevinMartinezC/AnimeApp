@@ -22,12 +22,9 @@ class DetailScreenViewModel @Inject constructor(
 
     fun fetchAnimeDetails(id: Int) {
         viewModelScope.launch {
-            try {
-                val details = getAnimeDetailsUseCase(id)
-                _animeDetails.value = details
-            } catch (e: Exception) {
-                Log.d("Error","${e.message}")
-            }
+            runCatching { getAnimeDetailsUseCase(id) }
+                .onSuccess { details -> _animeDetails.value = details }
+                .onFailure { e -> Log.d("Error", "${e.message}") }
         }
     }
 }
