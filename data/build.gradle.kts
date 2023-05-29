@@ -74,6 +74,10 @@ dependencies {
     testImplementation(libs.mockk)
     testImplementation(libs.kotlinx.coroutines.test)
     testImplementation(libs.core.testing)
+    testImplementation("com.apollographql.apollo3:apollo-mockserver:3.8.1")
+    testImplementation("com.apollographql.apollo3:apollo-testing-support:3.8.1")
+
+
 
 
 
