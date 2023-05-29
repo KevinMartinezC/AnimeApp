@@ -23,6 +23,7 @@ import org.junit.runners.JUnit4
 
 @RunWith(JUnit4::class)
 class SearchViewModelTest {
+
     private val getAnimeListUseCase: GetAnimeListUseCase = mockk()
     private val addFavoriteAnimeUseCase: AddFavoriteAnimeUseCase = mockk(relaxed = true)
     private val removeFavoriteAnimeUseCase: RemoveFavoriteAnimeUseCase = mockk(relaxed = true)

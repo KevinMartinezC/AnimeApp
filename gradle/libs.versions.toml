@@ -33,6 +33,7 @@ roomKtxVersion = "2.5.1"
 [libraries]
 accompanist-insets = { module = "com.google.accompanist:accompanist-insets", version.ref = "accompanistInsets" }
 apollo-runtime = { module = "com.apollographql.apollo3:apollo-runtime", version.ref = "apolloRuntime" }
+apollo-testing-support = { module = "com.apollographql.apollo3:apollo-testing-support", version.ref = "apolloRuntime" }
 appcompat = { module = "androidx.appcompat:appcompat", version.ref = "appcompat" }
 core-testing = { module = "androidx.arch.core:core-testing", version.ref = "coreTesting" }
 coreKtx = { module = "androidx.core:core-ktx", version.ref = "coreKtx" }

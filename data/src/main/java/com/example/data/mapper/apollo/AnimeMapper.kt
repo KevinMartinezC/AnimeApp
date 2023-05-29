@@ -10,3 +10,4 @@ fun GetAnimeListQuery.Medium.toAnime(): Anime {
         imageUrl = coverImage?.large.orEmpty()
     )
 }
+

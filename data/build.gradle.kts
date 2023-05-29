@@ -44,7 +44,16 @@ android {
         jvmTarget = "17"
     }
 }
+kapt {
+    correctErrorTypes = true
+}
 
+apollo {
+    service("service") {
+        packageName.set("com.example.data")
+        generateDataBuilders.set(true)
+    }
+}
 dependencies {
 
     implementation (project(":domain"))
@@ -61,15 +70,11 @@ dependencies {
     implementation(libs.bundles.paging)
     implementation(libs.bundles.room)
     ksp(libs.roomCompiler)
+    testImplementation(libs.apollo.testing.support)
+    testImplementation(libs.mockk)
+    testImplementation(libs.kotlinx.coroutines.test)
+    testImplementation(libs.core.testing)
 
-}
 
-kapt {
-    correctErrorTypes = true
-}
 
-apollo {
-    service("service") {
-        packageName.set("com.example.data")
-    }
 }

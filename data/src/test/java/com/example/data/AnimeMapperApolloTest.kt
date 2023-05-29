@@ -5,37 +5,56 @@ import com.example.data.mapper.apollo.toGraphQLMediaSort
 import com.example.data.mapper.apollo.toGraphQLMediaType
 import com.example.data.type.MediaSort
 import com.example.data.type.MediaType
+import com.example.data.type.buildMedia
+import com.example.data.type.buildMediaCoverImage
+import com.example.data.type.buildMediaTitle
+import com.example.data.type.buildPage
 import com.example.domain.model.search.AnimeSort
 import com.example.domain.model.search.AnimeType
 import org.junit.Assert.assertEquals
 import org.junit.Test
+import org.junit.runner.RunWith
+import org.junit.runners.JUnit4
 
+@RunWith(JUnit4::class)
 class AnimeMapperApolloTest {
+
+
     @Test
     fun `verify toAnime maps correctly`() {
 
-        val medium = GetAnimeListQuery.Medium(
-            id = 1,
-            title = GetAnimeListQuery.Title(
-                romaji = "Test Anime",
-                english = null,
-                native = null
-            ),
-            coverImage = GetAnimeListQuery.CoverImage(
-                large = "Test URL"
-            )
-        )
+        val data = GetAnimeListQuery.Data {
+            Page = buildPage {
+                media = listOf(
+                    buildMedia {
+                        id = 1
+                        title = buildMediaTitle {
+                            romaji = "Test"
+                            english = "Test"
+                            native = "test"
 
-        val anime = medium.toAnime()
+                        }
+                        coverImage = buildMediaCoverImage {
+                            large = "Url"
+                        }
+                    }
+                )
+            }
+        }
 
-        assertEquals(medium.id, anime.id)
-        assertEquals(medium.title?.romaji.orEmpty(), anime.title)
-        assertEquals(medium.coverImage?.large.orEmpty(), anime.imageUrl)
+
+        data.Page?.media?.get(0)?.let { media ->
+
+            val anime = media.toAnime()
+
+            assertEquals(media.id, anime.id)
+            assertEquals(media.title?.romaji.orEmpty(), anime.title)
+            assertEquals(media.coverImage?.large.orEmpty(), anime.imageUrl)
+        }
     }
 
     @Test
     fun `verify toGraphQLMediaSort maps AnimeSort correctly`() {
-        // Convert and verify POPULARITY_DESC
         var mediaSort = AnimeSort.POPULARITY_DESC.toGraphQLMediaSort()
         assertEquals(MediaSort.POPULARITY_DESC, mediaSort)
 
